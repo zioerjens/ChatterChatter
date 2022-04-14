@@ -7,6 +7,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { HomeComponent } from './home/home.component';
 import {RouterModule, Routes} from "@angular/router";
 import {HelloWorldComponent} from "./hello-world/hello-world.component";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    NgbModule,
     RouterModule.forRoot(routes),
   ],
   exports: [
