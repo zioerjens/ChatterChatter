@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HelloWorldService} from "./hello-world.service";
+import {HelloWorld} from "../model/HelloWorld";
 
 @Component({
   selector: 'app-hello-world',
@@ -8,12 +9,12 @@ import {HelloWorldService} from "./hello-world.service";
 })
 export class HelloWorldComponent implements OnInit {
 
-  private hello:string = '';
+  public hello:HelloWorld = {hello: ""};
 
   constructor(private helloService:HelloWorldService) {}
 
   ngOnInit(): void {
-    this.helloService.getHelloWorld().subscribe(res => {
+    this.helloService.getHelloWorld().subscribe((res: HelloWorld) => {
       this.hello = res;
     });
   }
