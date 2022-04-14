@@ -1,5 +1,7 @@
 package com.example.chatterchatter.config;
 
+import com.example.chatterchatter.security.ChatterUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,21 +13,20 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private ChatterUserDetailsService userDetailsService;
+
     @Bean
     @Override
     public UserDetailsService userDetailsService(){
-        var builder = User.withDefaultPasswordEncoder();
-
-        var user = builder.username("zimmermaj").password("user").roles("").build();
-        var admin = builder.username("admin").password("admin").roles("ADMIN").build();
-        return new InMemoryUserDetailsManager(user, admin);
+        return userDetailsService;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-            .antMatchers("/", "/api/**").permitAll()
+            .antMatchers("/", "/api/").permitAll()
             //.antMatchers("/contacts/add", "/contacts/{id}/edit", "/contacts/{id}/delete").hasRole("ADMIN")
             .anyRequest().authenticated();
     }
