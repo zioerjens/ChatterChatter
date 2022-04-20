@@ -1,7 +1,7 @@
 package com.example.chatterchatter.config.filter;
 
 import com.example.chatterchatter.config.JwtTokenService;
-import com.example.chatterchatter.config.SecurityConstant;
+import com.example.chatterchatter.config.constant.SecurityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

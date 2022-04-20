@@ -13,7 +13,8 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "SEQ_USER", sequenceName ="SEQ_USER", initialValue = 100)
     @Column(nullable = false, unique = true)
     private Long id;
 
@@ -32,8 +33,10 @@ public class User {
 
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Authority> authorities;
+    private String role;
+
+    @ElementCollection
+    private List<String> authorities;
 
     private boolean isLocked;
 

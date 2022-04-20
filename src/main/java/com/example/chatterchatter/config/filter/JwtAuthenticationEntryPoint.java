@@ -1,6 +1,6 @@
 package com.example.chatterchatter.config.filter;
 
-import com.example.chatterchatter.config.SecurityConstant;
+import com.example.chatterchatter.config.constant.SecurityConstant;
 import com.example.chatterchatter.model.HttpResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.AuthenticationException;
