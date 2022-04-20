@@ -1,6 +1,7 @@
 package com.example.chatterchatter.security;
 
-import com.example.chatterchatter.model.User;
+import com.example.chatterchatter.model.UserPrincipal;
+import com.example.chatterchatter.model.domain.User;
 import com.example.chatterchatter.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,18 +9,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-public class ChatterUserDetailsService implements UserDetailsService {
+public class ChatterUserDetailsService/* implements UserDetailsService*/ {
 
     @Autowired
     private UserRepository userRepository;
 
-    @Override
+    //@Override
     public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException(username);
         }
-        return user;
+        return new UserPrincipal(user.get());
     }
 }

@@ -1,4 +1,4 @@
-package com.example.chatterchatter.model;
+package com.example.chatterchatter.model.domain;
 
 import lombok.Getter;
 import lombok.Setter;
