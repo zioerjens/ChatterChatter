@@ -1,4 +1,4 @@
-package com.example.chatterchatter.model.domain;
+package com.example.chatterchatter.model.enums;
 
 import com.example.chatterchatter.config.constant.AuthorityConstant;
 
@@ -10,7 +10,7 @@ public enum RoleEnum {
 
     private List<String> authorities;
 
-    RoleEnum(List<String> authorities){
+    RoleEnum(List<String> authorities) {
         this.authorities = authorities;
     }
 

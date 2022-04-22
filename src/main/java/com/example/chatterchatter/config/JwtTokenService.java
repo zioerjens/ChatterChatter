@@ -6,8 +6,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.chatterchatter.config.constant.SecurityConstant;
 import com.example.chatterchatter.model.UserPrincipal;
+import com.example.chatterchatter.model.domain.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,11 +22,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.chatterchatter.config.constant.SecurityConstant.JWT_TOKEN_HEADER;
+
 @Service
 public class JwtTokenService {
 
     @Value("jwt.secret")
     private String secret;
+
+    public HttpHeaders getJwtHeader(User user) {
+        UserPrincipal principal = new UserPrincipal(user);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(JWT_TOKEN_HEADER, this.generateJwtToken(principal));
+        return headers;
+    }
 
     public String generateJwtToken(UserPrincipal principal){
         String[] claims = getClaimsFromUser(principal);

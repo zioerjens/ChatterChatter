@@ -1,15 +1,14 @@
 package com.example.chatterchatter.service;
 
-import com.example.chatterchatter.model.UserPrincipal;
-import com.example.chatterchatter.model.domain.RoleEnum;
 import com.example.chatterchatter.model.domain.User;
+import com.example.chatterchatter.model.enums.RoleEnum;
 import com.example.chatterchatter.repository.UserRepository;
 import com.example.chatterchatter.service.interfaces.UserServiceInterface;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,61 +19,10 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class UserService implements UserServiceInterface, UserDetailsService {
+public class UserService implements UserServiceInterface {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userOptional = userRepository.findByUsername(username);
-        if (userOptional.isEmpty()){
-            throw new UsernameNotFoundException("User not found by username: "+ username);
-        }
-        User user = userOptional.get();
-        user.setLastLoginDate(new Date());
-        userRepository.save(user);
-
-        return new UserPrincipal(user);
-    }
-
-    @Override
-    public User register(String firstName, String lastName, String username, String email) throws Exception {
-        validateRegistration(username, email);
-
-        User user = new User();
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setFirstname(firstName);
-        user.setLastname(lastName);
-        String encodedPassword = encodePassword("password");
-        user.setPassword(encodedPassword);
-        user.setJoinDate(new Date());
-        user.setActive(true);
-        user.setLocked(false);
-        user.setRole(RoleEnum.ROLE_USER.name());
-        user.setAuthorities(RoleEnum.ROLE_USER.getAuthorities());
-        return userRepository.save(user);
-    }
-
-    private String encodePassword(String password) {
-        return passwordEncoder.encode(password);
-    }
-
-    private void validateRegistration(String username, String email) throws Exception {
-        if(StringUtils.isEmpty(username) || StringUtils.isEmpty(email)){
-            throw new Exception("Username or email is empty");
-        }
-        if(findUserByUsername(username) != null){
-            throw new Exception("Username is already taken");
-        }
-        if(findUserByEmail(email) != null){
-            throw new Exception("An user with this email is already registered");
-        }
-    }
 
     @Override
     public List<User> findAllUsers() {
@@ -82,8 +30,39 @@ public class UserService implements UserServiceInterface, UserDetailsService {
     }
 
     @Override
+    public User findUserById(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
+
+    @Override
+    public User addUser(User user) {
+        user.setId(null);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateUser(Long userId, User user) throws Exception {
+        Optional<User> existingUserOptional = userRepository.findById(userId);
+        if(existingUserOptional.isEmpty()){
+            throw new Exception("User not found.");
+        }
+        User existingUser = existingUserOptional.get();
+        existingUser.setUsername(user.getUsername());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setFirstname(user.getFirstname());
+        existingUser.setLastname(user.getLastname());
+
+        return userRepository.save(existingUser);
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
+    @Override
     public User findUserByUsername(String username) throws Exception {
-        if(StringUtils.isEmpty(username)){
+        if (StringUtils.isEmpty(username)) {
             throw new Exception("Username is empty");
         }
         Optional<User> user = userRepository.findByUsername(username);
@@ -92,7 +71,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
 
     @Override
     public User findUserByEmail(String email) throws Exception {
-        if(StringUtils.isEmpty(email)){
+        if (StringUtils.isEmpty(email)) {
             throw new Exception("Email is empty");
         }
         Optional<User> user = userRepository.findByEmail(email);

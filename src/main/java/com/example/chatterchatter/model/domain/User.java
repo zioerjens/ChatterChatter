@@ -1,5 +1,6 @@
 package com.example.chatterchatter.model.domain;
 
+import com.example.chatterchatter.model.enums.RoleEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +15,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "SEQ_USER", sequenceName ="SEQ_USER", initialValue = 100)
+    @SequenceGenerator(name = "SEQ_USER", sequenceName = "SEQ_USER", initialValue = 100)
     @Column(nullable = false, unique = true)
     private Long id;
 
@@ -33,7 +34,7 @@ public class User {
 
     private String password;
 
-    private String role;
+    private RoleEnum role;
 
     @ElementCollection
     private List<String> authorities;

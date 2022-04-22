@@ -1,6 +1,6 @@
 package com.example.chatterchatter.web.rest;
 
-import com.example.chatterchatter.web.rest.dto.HelloWorldDTO;
+import com.example.chatterchatter.model.dto.HelloWorldDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.example.chatterchatter.web.rest.dto;
+package com.example.chatterchatter.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,9 +11,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO implements Serializable {
-    private String firstName;
-    private String lastName;
+public class UserLoginDTO implements Serializable {
     private String username;
-    private String email;
+    private String password;
 }
