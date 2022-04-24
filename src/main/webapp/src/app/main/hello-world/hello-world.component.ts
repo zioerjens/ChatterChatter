@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HelloWorldService} from "./hello-world.service";
-import {HelloWorld} from "../model/HelloWorld";
+import {HelloWorld} from "src/app/model/HelloWorld";
 
 @Component({
   selector: 'app-hello-world',
