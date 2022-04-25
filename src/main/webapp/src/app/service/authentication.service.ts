@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {UserLogin} from "../model/UserLogin";
 import {User} from "../model/User";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {UserRegistration} from "../model/UserRegistration";
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +19,12 @@ export class AuthenticationService {
     this.loggedInUsername = null;
   }
 
-  login(credentials: UserLogin): Observable<HttpResponse<any> | HttpErrorResponse> {
-    return this.http.post<HttpResponse<any> | HttpErrorResponse>('/api/auth/login', credentials, {observe: 'response'});
+  login(credentials: UserLogin): Observable<HttpResponse<User>> {
+    return this.http.post<User>('/api/auth/login', credentials, {observe: 'response'});
   }
 
-  register(user: User): Observable<HttpResponse<any> | HttpErrorResponse> {
-    return this.http.post<HttpResponse<any> | HttpErrorResponse>('/api/auth/register', user, {observe: 'response'});
+  register(user: UserRegistration): Observable<HttpResponse<User>> {
+    return this.http.post<User>('/api/auth/register', user, {observe: 'response'});
   }
 
   logout(): void {
@@ -34,14 +35,18 @@ export class AuthenticationService {
     localStorage.removeItem('users');
   }
 
-  addTokenToLocalStorage(token: string): void {
+  addTokenToLocalStorage(token: string | null): void {
     this.token = token;
-    localStorage.setItem('token', token);
+    if (typeof token === "string") {
+      localStorage.setItem('token', token);
+    }
   }
 
-  addUserToLocalStorage(user: User): void {
-    this.loggedInUsername = user.username;
-    localStorage.setItem('user', JSON.stringify(user));
+  addUserToLocalStorage(user: User | null): void {
+    if(user){
+      this.loggedInUsername = user.username;
+      localStorage.setItem('user', JSON.stringify(user));
+    }
   }
 
   getUserFromLocalStorage(): User {

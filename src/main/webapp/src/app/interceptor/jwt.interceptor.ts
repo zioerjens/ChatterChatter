@@ -1,10 +1,5 @@
 import {Injectable} from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AuthenticationService} from "../service/authentication.service";
 
@@ -15,6 +10,7 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 
   intercept(httpRequest: HttpRequest<any>, httpHandler: HttpHandler): Observable<HttpEvent<any>> {
+    debugger;
     if (httpRequest.url.includes('/api/auth/login') || httpRequest.url.includes('/api/auth/register')) {
       return httpHandler.handle(httpRequest);
     }

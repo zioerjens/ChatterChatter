@@ -50,6 +50,9 @@ const customNotifierOptions: NotifierOptions = {
     NotifierModule.withConfig(customNotifierOptions),
     CommonModule
   ],
+  exports : [
+    NotifierModule
+  ],
   providers:[
     NotificationService
   ]

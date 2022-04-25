@@ -37,18 +37,18 @@ public class JwtTokenService {
         return headers;
     }
 
-    public String generateJwtToken(UserPrincipal principal){
+    public String generateJwtToken(UserPrincipal principal) {
         String[] claims = getClaimsFromUser(principal);
         return JWT.create().withIssuer(SecurityConstant.WEBEC_ISSUER)
                 .withAudience(SecurityConstant.WEBEC_ADMINISTRATION)
-                .withIssuedAt(new Date(System.currentTimeMillis() + SecurityConstant.EXPIRATION_TIME))
+                .withIssuedAt(new Date())
                 .withSubject(principal.getUsername())
                 .withArrayClaim(SecurityConstant.AUTHORITIES, claims)
-                .withExpiresAt(new Date())
+                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstant.EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(secret.getBytes()));
     }
 
-    public List<GrantedAuthority> getAuthorities(String token){
+    public List<GrantedAuthority> getAuthorities(String token) {
         String[] claims = getClaimsFromToken(token);
         return Arrays.stream(claims).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
@@ -59,12 +59,12 @@ public class JwtTokenService {
         return token;
     }
 
-    public boolean isTokenValid(String username, String token){
+    public boolean isTokenValid(String username, String token) {
         JWTVerifier verifier = getJWTVerifier();
         return StringUtils.isNotEmpty(username) && !isTokenExpired(verifier, token);
     }
 
-    public String getSubject(String token){
+    public String getSubject(String token) {
         JWTVerifier verifier = getJWTVerifier();
         return verifier.verify(token).getSubject();
     }
@@ -84,7 +84,7 @@ public class JwtTokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC512(secret);
             verifier = JWT.require(algorithm).withIssuer(SecurityConstant.WEBEC_ISSUER).build();
-        } catch (JWTVerificationException e){
+        } catch (JWTVerificationException e) {
             throw new JWTVerificationException(SecurityConstant.TOKEN_CANNOT_BE_VERIFIED);
         }
         return verifier;

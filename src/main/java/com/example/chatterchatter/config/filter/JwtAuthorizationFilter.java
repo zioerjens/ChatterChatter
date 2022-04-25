@@ -26,19 +26,19 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getMethod().equalsIgnoreCase(SecurityConstant.OPTIONS_HTTP_METHOD)){
+        if (request.getMethod().equalsIgnoreCase(SecurityConstant.OPTIONS_HTTP_METHOD)) {
             response.setStatus(HttpStatus.OK.value());
             filterChain.doFilter(request, response);
             return;
         }
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(authorizationHeader == null || !authorizationHeader.startsWith(SecurityConstant.TOKEN_PREFIX)){
+        if (authorizationHeader == null || !authorizationHeader.startsWith(SecurityConstant.TOKEN_PREFIX)) {
             filterChain.doFilter(request, response);
             return;
         }
         String token = authorizationHeader.substring(SecurityConstant.TOKEN_PREFIX.length());
         String username = jwtTokenService.getSubject(token);
-        if(jwtTokenService.isTokenValid(username, token) && SecurityContextHolder.getContext().getAuthentication() == null){
+        if (jwtTokenService.isTokenValid(username, token) && SecurityContextHolder.getContext().getAuthentication() == null) {
             List<GrantedAuthority> authorities = jwtTokenService.getAuthorities(token);
             UsernamePasswordAuthenticationToken authenticationToken = jwtTokenService.getAuthentication(username, authorities, request);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
