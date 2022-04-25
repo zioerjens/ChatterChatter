@@ -1,4 +1,4 @@
-package com.example.chatterchatter.web.rest.dto;
+package com.example.chatterchatter.model.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

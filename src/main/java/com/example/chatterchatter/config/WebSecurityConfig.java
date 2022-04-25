@@ -1,32 +1,63 @@
 package com.example.chatterchatter.config;
 
+import com.example.chatterchatter.config.constant.SecurityConstant;
+import com.example.chatterchatter.config.filter.JwtAccessDeniedHandler;
+import com.example.chatterchatter.config.filter.JwtAuthenticationEntryPoint;
+import com.example.chatterchatter.config.filter.JwtAuthorizationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService(){
-        var builder = User.withDefaultPasswordEncoder();
+    @Autowired
+    private JwtAuthorizationFilter jwtAuthorizationFilter;
+    @Autowired
+    private JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Autowired
+    private ChatterUserDetailsService userDetailsService;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-        var user = builder.username("zimmermaj").password("user").roles("").build();
-        var admin = builder.username("admin").password("admin").roles("ADMIN").build();
-        return new InMemoryUserDetailsManager(user, admin);
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-            .antMatchers("/", "/api/**").permitAll()
-            //.antMatchers("/contacts/add", "/contacts/{id}/edit", "/contacts/{id}/delete").hasRole("ADMIN")
-            .anyRequest().authenticated();
+        http.csrf().disable().cors().and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(SecurityConstant.PUBLIC_URLS).permitAll()
+                .antMatchers("/h2-console/**").permitAll()
+                .anyRequest().authenticated()
+                //.and().formLogin().successForwardUrl("/api/hello")
+                .and().headers().frameOptions().sameOrigin()
+                .and().exceptionHandling().accessDeniedHandler(jwtAccessDeniedHandler)
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and().addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
 }
