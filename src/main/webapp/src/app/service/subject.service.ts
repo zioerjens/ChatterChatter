@@ -18,4 +18,8 @@ export class SubjectService {
   create(subject: SubjectDTO): Observable<SubjectDTO> {
     return this.http.post<SubjectDTO>('/api/subject/create', subject);
   }
+
+  delete(subjectId: number): Observable<HttpResponse<unknown>> {
+    return this.http.delete<HttpResponse<unknown>>('/api/subject/delete/' + subjectId);
+  }
 }

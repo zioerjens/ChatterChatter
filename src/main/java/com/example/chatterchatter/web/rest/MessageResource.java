@@ -22,6 +22,12 @@ public class MessageResource {
         return new ResponseEntity<>(MessageDTO.fromAll(messages), HttpStatus.OK);
     }
 
+    @GetMapping("/{subjectId}")
+    public ResponseEntity<List<MessageDTO>> getBySubjectId(@PathVariable Long subjectId) {
+        var messages = messageService.findBySubjectId(subjectId);
+        return new ResponseEntity<>(MessageDTO.fromAll(messages), HttpStatus.OK);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<MessageDTO> create(@RequestBody MessageDTO messageDTO) {
         var message = messageService.create(messageDTO);

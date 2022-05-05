@@ -18,4 +18,8 @@ export class MessageService {
   create(message: MessageDTO): Observable<MessageDTO> {
     return this.http.post<MessageDTO>('/api/message/create', message);
   }
+
+  getBySubjectId(subjectId: number) {
+    return this.http.get<MessageDTO[]>('/api/message/' + subjectId, {observe: 'response'});
+  }
 }

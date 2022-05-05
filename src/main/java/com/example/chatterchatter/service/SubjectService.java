@@ -28,4 +28,8 @@ public class SubjectService implements SubjectServiceInterface {
         return subjectRepository.save(subject);
     }
 
+    @Override
+    public void delete(Long subjectId) {
+        subjectRepository.deleteById(subjectId);
+    }
 }

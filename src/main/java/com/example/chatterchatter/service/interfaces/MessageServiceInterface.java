@@ -10,4 +10,6 @@ public interface MessageServiceInterface {
     List<ChatMessage> findAll();
 
     ChatMessage create(MessageDTO messageDTO);
+
+    List<ChatMessage> findBySubjectId(Long subjectId);
 }

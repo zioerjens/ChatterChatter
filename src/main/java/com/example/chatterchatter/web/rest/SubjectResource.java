@@ -27,4 +27,10 @@ public class SubjectResource {
         var subject = subjectService.create(subjectDTO);
         return new ResponseEntity<>(SubjectDTO.from(subject), HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        subjectService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

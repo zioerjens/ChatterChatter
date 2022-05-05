@@ -10,4 +10,6 @@ public interface SubjectServiceInterface {
     List<Subject> findAll();
 
     Subject create(SubjectDTO subjectDTO);
+
+    void delete(Long subjectId);
 }

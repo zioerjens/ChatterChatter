@@ -39,6 +39,11 @@ public class MessageService implements MessageServiceInterface {
     }
 
     @Override
+    public List<ChatMessage> findBySubjectId(Long subjectId) {
+        return messageRepository.findAllBySubjectId(subjectId);
+    }
+
+    @Override
     public List<ChatMessage> findAll() {
         return messageRepository.findAll();
     }
