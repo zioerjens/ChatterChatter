@@ -29,7 +29,7 @@ export class UserService {
   }
 
   deleteUser(userId: number): Observable<CustomHttpResponse | HttpErrorResponse> {
-    return this.http.delete<CustomHttpResponse | HttpErrorResponse>(`/api/user/${userId}/delete`);
+    return this.http.delete<CustomHttpResponse | HttpErrorResponse>(`/api/users/${userId}/delete`);
   }
 
   addUsersToLocalStorage(users: User[]): void {

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../service/user.service";
 import {Subscription} from "rxjs";
 import {User} from "../../../model/User";
 import {Router} from "@angular/router";
+import {NotificationService} from "../../../utils/notification/notification.service";
+import {NotificationTypeEnum} from "../../../model/enum/notification-type.enum";
 
 @Component({
   selector: 'app-user-list',
@@ -16,6 +18,7 @@ export class UserListComponent implements OnInit {
   users: User[] = [];
 
   constructor(private userService: UserService,
+              private notificationService:NotificationService,
               private router: Router) { }
 
   ngOnInit(): void {
@@ -33,4 +36,14 @@ export class UserListComponent implements OnInit {
     this.router.navigateByUrl(`/users/${userId}/edit`);
   }
 
+  onDelete(id: number) : void {
+    if(!id){
+      return;
+    }
+    this.userService.deleteUser(id).subscribe(res =>{
+      this.notificationService.notify(NotificationTypeEnum.SUCCESS, "User successfully deleted");
+      this.ngOnInit();
+    })
+
+  }
 }
