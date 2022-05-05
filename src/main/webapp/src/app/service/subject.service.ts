@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {SubjectDTO} from "../model/SubjectDTO";
 
@@ -15,7 +15,7 @@ export class SubjectService {
     return this.http.get<SubjectDTO[]>('/api/subject/all', {observe: 'response'});
   }
 
-  create(subject: SubjectDTO): Observable<SubjectDTO | HttpErrorResponse> {
-    return this.http.post<SubjectDTO | HttpErrorResponse>('/api/subject/create', subject);
+  create(subject: SubjectDTO): Observable<SubjectDTO> {
+    return this.http.post<SubjectDTO>('/api/subject/create', subject);
   }
 }

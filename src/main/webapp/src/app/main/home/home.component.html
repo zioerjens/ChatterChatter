@@ -6,8 +6,23 @@
 <form #subjectForm="ngForm" (ngSubmit)="onCreateSubject(subjectForm.value)">
   <input type="text" name="title" placeholder="Title"
          ngModel required/>
-  <button type="submit" class="btn btn-login"
+  <button type="submit"
           name="create-subject-button">
-    <span>Login</span>
+    <span>Create Subject</span>
+  </button>
+</form>
+<hr>
+<button (click)="loadMessages()">Load Messages</button>
+<ng-container *ngFor="let message of messages">
+  <p [textContent]="message.subjectId"></p>
+  <p [textContent]="message.time"></p>
+  <p [textContent]="message.content"></p>
+</ng-container>
+<form #messageForm="ngForm" (ngSubmit)="onCreateMessage(messageForm.value)">
+  <input type="text" name="content" placeholder="Message"
+         ngModel required/>
+  <button type="submit"
+          name="create-subject-button">
+    <span>Create Message</span>
   </button>
 </form>

@@ -18,7 +18,7 @@ public class UserResource {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers() throws Exception {
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> users = userService.findAllUsers().stream().map(this::convertUserToDTO).toList();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
@@ -31,8 +31,11 @@ public class UserResource {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) throws Exception {
-        User user = convertUserDTOToDomain(userDTO);
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
+        if (userDTO == null) {
+            throw new IllegalStateException("UserResource.addUser() - request body was empty");
+        }
+        User user = userDTO.toDomain();
         User savedUser = userService.addUser(user);
         UserDTO dto = convertUserToDTO(savedUser);
         return new ResponseEntity<>(dto, HttpStatus.OK);
@@ -40,14 +43,17 @@ public class UserResource {
 
     @PutMapping("/{userId}/update")
     public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) throws Exception {
-        User user = convertUserDTOToDomain(userDTO);
+        if (userDTO == null) {
+            throw new IllegalStateException("UserResource.updateUser() - request body was empty");
+        }
+        User user = userDTO.toDomain();
         User updatedUser = userService.updateUser(userId, user);
         UserDTO updatedUserDTO = convertUserToDTO(updatedUser);
         return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/{userId}/delete")
-    public ResponseEntity<UserDTO> deleteUser(@PathVariable Long userId) throws Exception {
+    public ResponseEntity<UserDTO> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -63,18 +69,5 @@ public class UserResource {
         dto.setLastName(user.getLastname());
         dto.setFirstName(user.getFirstname());
         return dto;
-    }
-
-    private User convertUserDTOToDomain(UserDTO userDTO) {
-        if (userDTO == null) {
-            return null;
-        }
-        User user = new User();
-        user.setId(userDTO.getId());
-        user.setEmail(userDTO.getEmail());
-        user.setUsername(userDTO.getUsername());
-        user.setLastname(userDTO.getLastName());
-        user.setFirstname(userDTO.getFirstName());
-        return user;
     }
 }
