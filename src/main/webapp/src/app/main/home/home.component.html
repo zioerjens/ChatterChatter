@@ -1,1 +1,13 @@
 <p>home works!</p>
+<button (click)="loadSubjects()">Load Subjects</button>
+<ng-container *ngFor="let subject of subjects">
+  <p [textContent]="subject.title"></p>
+</ng-container>
+<form #subjectForm="ngForm" (ngSubmit)="onCreateSubject(subjectForm.value)">
+  <input type="text" name="title" placeholder="Title"
+         ngModel required/>
+  <button type="submit" class="btn btn-login"
+          name="create-subject-button">
+    <span>Login</span>
+  </button>
+</form>
