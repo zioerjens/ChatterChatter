@@ -10,7 +10,6 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 
   intercept(httpRequest: HttpRequest<any>, httpHandler: HttpHandler): Observable<HttpEvent<any>> {
-    debugger;
     if (httpRequest.url.includes('/api/auth/login') || httpRequest.url.includes('/api/auth/register')) {
       return httpHandler.handle(httpRequest);
     }

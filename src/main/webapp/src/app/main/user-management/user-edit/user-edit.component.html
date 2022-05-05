@@ -1,0 +1,39 @@
+<section class="container" *ngIf="!showLoading && user">
+  <h3>Edit User #{{user?.id}} - {{user?.username}}</h3>
+  <form #userEditForm="ngForm" (ngSubmit)="onEdit(userEditForm.value)">
+    <div class="input-group mb-3">
+      <span class="input-group-text"><fa-icon [icon]="faUser"></fa-icon></span>
+      <input type="text" class="form-control" name="username" placeholder="Username" [(ngModel)]="user.username"
+             ngModel #usernameInput="ngModel" required/>
+    </div>
+    <span class="help-block color-danger" *ngIf="usernameInput.invalid && usernameInput.touched">Please enter an username</span>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text"><fa-icon [icon]="faUser"></fa-icon></span>
+      <input type="text" class="form-control" name="firstname" placeholder="Firstname" [(ngModel)]="user.firstName"
+             ngModel #firstnameInput="ngModel"/>
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text"><fa-icon [icon]="faUser"></fa-icon></span>
+      <input type="text" class="form-control" name="lastname" placeholder="Lastname" [(ngModel)]="user.lastName"
+             ngModel #lastnameInput="ngModel"/>
+    </div>
+
+    <div class="input-group mb-3">
+      <span class="input-group-text"><fa-icon [icon]="faEmail"></fa-icon></span>
+      <input type="email" class="form-control" name="email" placeholder="E-Mail" [(ngModel)]="user.email"
+             ngModel #emailInput="ngModel" required/>
+    </div>
+    <span class="help-block color-danger" *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</span>
+
+    <section class="input-group-btn">
+      <button type="submit" [disabled]="userEditForm.invalid || showLoading" class="btn btn-edit float-right"
+              name="edit-button">
+        <fa-icon *ngIf="showLoading" [icon]="faSpinner"></fa-icon>
+        <span *ngIf="showLoading">Loading...</span>
+        <span *ngIf="!showLoading">Save</span>
+      </button>
+    </section>
+  </form>
+</section>
