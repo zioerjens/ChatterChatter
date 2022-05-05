@@ -1,12 +1,14 @@
 @use 'src/app/main/variables' as v;
 
 .register-card {
+  position: absolute;
+  top: 0;
+  bottom: 0;
   height: 500px;
   width: 600px;
   margin-top: auto;
   margin-bottom: auto;
   background: v.$background;
-  position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;

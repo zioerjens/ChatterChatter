@@ -13,10 +13,12 @@ import {AuthenticationGuard} from "./guard/authentication.guard";
 import {NotificationModule} from "./utils/notification/notification.module";
 import {LoginComponent} from './main/login/login.component';
 import {RegisterComponent} from './main/register/register.component';
-import {UserListComponent} from './main/user-list/user-list.component';
+import {UserListComponent} from './main/user-management/user-list/user-list.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {FormsModule} from "@angular/forms";
 import { LogoutComponent } from './main/logout/logout.component';
+import { UserEditComponent } from './main/user-management/user-edit/user-edit.component';
+import { NavigationComponent } from './utils/navigation/navigation.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -26,11 +28,14 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    NavigationComponent,
     HomeComponent,
     LoginComponent,
     RegisterComponent,
     UserListComponent,
-    LogoutComponent
+    LogoutComponent,
+    UserEditComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

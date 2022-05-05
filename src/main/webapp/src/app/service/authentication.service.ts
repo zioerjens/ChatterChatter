@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {UserLogin} from "../model/UserLogin";
 import {User} from "../model/User";
 import {JwtHelperService} from "@auth0/angular-jwt";
@@ -13,6 +13,8 @@ export class AuthenticationService {
   private token: string | null;
   private loggedInUsername: string | null;
   private jwtHelper = new JwtHelperService();
+
+  private $loggedIn = new Subject<boolean>();
 
   constructor(private http: HttpClient) {
     this.token = null;
@@ -30,6 +32,7 @@ export class AuthenticationService {
   logout(): void {
     this.token = null;
     this.loggedInUsername = null;
+    this.$loggedIn.next(false);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('users');
@@ -59,20 +62,26 @@ export class AuthenticationService {
     return token;
   }
 
-  isLoggedIn(): boolean{
+  isTokenValid(): boolean{
     this.getTokenFromLocalStorage();
     if (this.token != null && this.token !== ''){
       const decodedToken = this.jwtHelper.decodeToken(this.token);
       if(decodedToken.sub != null || decodedToken.sub !=''){
         if(!this.jwtHelper.isTokenExpired(this.token)){
           this.loggedInUsername = decodedToken.sub;
+          this.$loggedIn.next(true);
           return true;
         }
       }
     } else {
       this.logout();
     }
+    this.$loggedIn.next(false);
     return false;
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.$loggedIn.asObservable();
   }
 
 }
