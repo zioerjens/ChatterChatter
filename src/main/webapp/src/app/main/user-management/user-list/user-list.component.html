@@ -1,14 +1,23 @@
-<h3>User management</h3>
+
 <section class="container">
-  <div class="card w-25" *ngFor="let user of users">
-    <div class="card-body">
-      <h5 class="card-title">{{user.username}}</h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
-      <p class="card-text" *ngIf="user.firstName!=null || user.lastName != null">{{user.firstName}} {{user.lastName}}</p>
-      <section class="actions">
-        <button class="btn btn-primary mr-1" (click)="openEdit(user.id)">Edit</button>
-        <a (click)="onDelete(user.id)" class="btn btn-secondary">Delete</a>
-      </section>
+  <div class="row">
+    <div class="col-lg-8 col-md-6 col-sm-12"><h3>User management</h3></div>
+    <div class="col-lg-4 col-md-6 col-sm-12 align-self-end">
+      <button class="btn btn-primary mr-1 float-right" (click)="onCreate()" ><fa-icon [icon]="faPlus"></fa-icon> New</button></div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let user of users">
+      <div class="card m-1">
+        <div class="card-body">
+          <h5 class="card-title">{{user.username}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
+          <p class="card-text" *ngIf="user.firstName!=null || user.lastName != null">{{user.firstName}} {{user.lastName}}</p>
+          <section class="actions">
+            <button class="btn btn-primary mr-1" (click)="openEdit(user.id)"><fa-icon [icon]="faEdit"></fa-icon> Edit</button>
+            <button class="btn btn-secondary" (click)="onDelete(user.id)" ><fa-icon [icon]="faDelete"></fa-icon> Delete</button>
+          </section>
+        </div>
+      </div>
     </div>
   </div>
 </section>

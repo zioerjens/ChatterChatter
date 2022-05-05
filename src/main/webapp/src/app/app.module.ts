@@ -19,6 +19,7 @@ import {FormsModule} from "@angular/forms";
 import { LogoutComponent } from './main/logout/logout.component';
 import { UserEditComponent } from './main/user-management/user-edit/user-edit.component';
 import { NavigationComponent } from './utils/navigation/navigation.component';
+import { UserCreateComponent } from './main/user-management/user-create/user-create.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -35,7 +36,9 @@ const routes: Routes = [
     UserListComponent,
     LogoutComponent,
     UserEditComponent,
-    NavigationComponent
+    UserCreateComponent,
+    NavigationComponent,
+    UserCreateComponent
   ],
   imports: [
     BrowserModule,

@@ -2,12 +2,11 @@ package com.example.chatterchatter.web.rest;
 
 import com.example.chatterchatter.model.domain.User;
 import com.example.chatterchatter.model.dto.UserDTO;
+import com.example.chatterchatter.model.dto.UserRegisterDTO;
 import com.example.chatterchatter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +32,8 @@ public class UserResource {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) throws Exception {
-        User user = convertUserDTOToDomain(userDTO);
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserRegisterDTO userDTO) throws Exception {
+        User user = convertRegisterUserDTOToDomain(userDTO);
         User savedUser = userService.addUser(user);
         UserDTO dto = convertUserToDTO(savedUser);
         return new ResponseEntity<>(dto, HttpStatus.OK);
@@ -77,6 +76,19 @@ public class UserResource {
         user.setUsername(userDTO.getUsername());
         user.setLastname(userDTO.getLastName());
         user.setFirstname(userDTO.getFirstName());
+        return user;
+    }
+
+    private User convertRegisterUserDTOToDomain(UserRegisterDTO userDTO) {
+        if (userDTO == null) {
+            return null;
+        }
+        User user = new User();
+        user.setEmail(userDTO.getEmail());
+        user.setUsername(userDTO.getUsername());
+        user.setLastname(userDTO.getLastName());
+        user.setFirstname(userDTO.getFirstName());
+        user.setPassword(userDTO.getPassword());
         return user;
     }
 }

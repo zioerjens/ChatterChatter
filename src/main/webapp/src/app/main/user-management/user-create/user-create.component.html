@@ -1,0 +1,62 @@
+<section class="container">
+  <div class="row">
+    <div class="col"><h3>User create</h3></div>
+  </div>
+  <form class="row" #createUserForm="ngForm" (ngSubmit)="onCreate(createUserForm.value)">
+    <div class="col-6">
+      <div class="input-group mb-3">
+        <span class="input-group-text"><fa-icon [icon]="faUser"></fa-icon></span>
+        <input type="text" class="form-control" name="username" placeholder="Username"
+               ngModel #usernameInput="ngModel" required/>
+      </div>
+      <span class="help-block color-danger" *ngIf="usernameInput.invalid && usernameInput.touched">Please enter an username</span>
+    </div>
+    <div class="col-6">
+      <div class="input-group mb-3">
+        <span class="input-group-text"><fa-icon [icon]="faEmail"></fa-icon></span>
+        <input type="email" class="form-control" name="email" placeholder="E-Mail"
+               ngModel #emailInput="ngModel" required/>
+      </div>
+      <span class="help-block color-danger"
+            *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</span>
+    </div>
+    <div class="col-6">
+      <div class="input-group mb-3">
+        <span class="input-group-text"><fa-icon [icon]="faUser"></fa-icon></span>
+        <input type="text" class="form-control" name="firstName" placeholder="Firstname"
+               ngModel #firstNameInput="ngModel"/>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="input-group mb-3">
+        <span class="input-group-text"><fa-icon [icon]="faUser"></fa-icon></span>
+        <input type="text" class="form-control" name="lastName" placeholder="Lastname"
+               ngModel #lastNameInput="ngModel"/>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="input-group mb-3">
+        <span class="input-group-text"><fa-icon [icon]="faPassword"></fa-icon></span>
+        <input type="password" class="form-control" name="password" placeholder="Password"
+               ngModel #passwordInput="ngModel" required/>
+      </div>
+      <span class="help-block color-danger"
+            *ngIf="passwordInput.invalid && passwordInput.touched">Please enter a password</span>
+    </div>
+    <div class="col-6">
+      <div class="input-group mb-3">
+        <span class="input-group-text"><fa-icon [icon]="faPassword"></fa-icon></span>
+        <input type="password" class="form-control" name="passwordRepeat" placeholder="Repeat password"
+               ngModel #passwordRepeatInput="ngModel" required/>
+      </div>
+      <span class="help-block color-danger" *ngIf="passwordRepeatInput.invalid && passwordRepeatInput.touched">Please enter a password</span>
+      <span class="help-block color-danger" *ngIf="passwordInput.value !== passwordRepeatInput.value">Please repeat the password</span>
+    </div>
+    <div class="col-12 align-self-end">
+      <button type="submit" [disabled]="createUserForm.invalid || showLoading" class="btn btn-primary float-right" name="create-user-button">
+        <span *ngIf="showLoading">Loading...</span>
+        <span *ngIf="!showLoading"><fa-icon [icon]="faPlus"></fa-icon> Register</span>
+      </button>
+    </div>
+  </form>
+</section>

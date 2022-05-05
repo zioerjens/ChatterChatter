@@ -1,9 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {User} from "../../../model/User";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {UserService} from "../../../service/user.service";
-import {faEnvelope, faKey, faSpinner, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faEnvelope, faSpinner, faUser} from "@fortawesome/free-solid-svg-icons";
+import {NotificationService} from "../../../utils/notification/notification.service";
+import {NotificationTypeEnum} from "../../../model/enum/notification-type.enum";
 
 @Component({
   selector: 'app-user-edit',
@@ -22,6 +24,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
+              private notificationService: NotificationService,
               private userService: UserService) { }
 
   ngOnInit(): void {
@@ -40,13 +44,12 @@ export class UserEditComponent implements OnInit, OnDestroy {
   }
 
   onEdit(formData: User) {
-
-    console.log(this.user?.id);
     if(!this.user){
       return;
     }
     this.userService.updateUser(formData, this.user.id).subscribe( res => {
-      console.log(res);
+      this.notificationService.notify(NotificationTypeEnum.SUCCESS, 'User successfully updated');
+      this.router.navigateByUrl(`/users/management`);
     });
   }
 }
