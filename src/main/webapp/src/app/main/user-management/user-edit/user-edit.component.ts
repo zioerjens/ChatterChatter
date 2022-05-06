@@ -6,7 +6,8 @@ import {UserService} from "../../../service/user.service";
 import {faEnvelope, faKey, faSpinner, faUser} from "@fortawesome/free-solid-svg-icons";
 import {NotificationService} from "../../../utils/notification/notification.service";
 import {NotificationTypeEnum} from "../../../model/enum/notification-type.enum";
-import {ChangePassword} from "../../../model/ChangePassword";
+import {ChangePassword} from "../../../model/change-password";
+import {UserRoleEnum} from "../../../model/enum/user-role.enum";
 
 @Component({
   selector: 'app-user-edit',
@@ -81,5 +82,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
     this.subs.push(this.userService.changeUserPassword(this.user.id, password.toString(), passwordRepeat.toString()).subscribe(res => {
       this.notificationService.notify(NotificationTypeEnum.SUCCESS, 'Changed the password successfully');
     }));
+  }
+
+  isUserAdmin(): boolean {
+    return this.user?.role===UserRoleEnum.ADMIN;
   }
 }

@@ -49,6 +49,7 @@ public class AuthenticationResource {
         dto.setUsername(user.getUsername());
         dto.setLastName(user.getLastname());
         dto.setFirstName(user.getFirstname());
+        dto.setRole(user.getRole());
         return dto;
     }
 }

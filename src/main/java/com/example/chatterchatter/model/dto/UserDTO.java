@@ -1,5 +1,6 @@
 package com.example.chatterchatter.model.dto;
 
+import com.example.chatterchatter.model.enums.RoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,4 +18,5 @@ public class UserDTO implements Serializable {
     private String lastName;
     private String username;
     private String email;
+    private RoleEnum role;
 }

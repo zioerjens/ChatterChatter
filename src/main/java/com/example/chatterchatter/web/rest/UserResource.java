@@ -79,6 +79,7 @@ public class UserResource {
         dto.setUsername(user.getUsername());
         dto.setLastName(user.getLastname());
         dto.setFirstName(user.getFirstname());
+        dto.setRole(user.getRole());
         return dto;
     }
 
@@ -92,6 +93,8 @@ public class UserResource {
         user.setUsername(userDTO.getUsername());
         user.setLastname(userDTO.getLastName());
         user.setFirstname(userDTO.getFirstName());
+        user.setRole(userDTO.getRole());
+
         return user;
     }
 

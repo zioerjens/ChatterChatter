@@ -45,7 +45,7 @@
   </form>
 </section>
 <hr/>
-<section class="container" *ngIf="!showLoading && user">
+<section class="container" *ngIf="!showLoading && user && !isUserAdmin()">
   <div class="row">
     <div class="col-12"><h3>Make user admin</h3></div>
     <p class="col-md-8 col-sm-12">Do you want to increase the privileges for this user?</p>
@@ -56,7 +56,7 @@
     </section>
   </div>
 </section>
-<hr/>
+<hr *ngIf="!isUserAdmin()"/>
 <section class="container" *ngIf="!showLoading && user">
   <div class="row">
     <div class="col-12"><h3>Change password</h3></div>
