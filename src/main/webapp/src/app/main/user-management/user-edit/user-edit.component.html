@@ -1,38 +1,89 @@
 <section class="container" *ngIf="!showLoading && user">
-  <h3>Edit User #{{user?.id}} - {{user?.username}}</h3>
-  <form #userEditForm="ngForm" (ngSubmit)="onEdit(userEditForm.value)">
-    <div class="input-group mb-3">
-      <span class="input-group-text"><fa-icon [icon]="faUser"></fa-icon></span>
-      <input type="text" class="form-control" name="username" placeholder="Username" [(ngModel)]="user.username"
-             ngModel #usernameInput="ngModel" required/>
-    </div>
-    <span class="help-block color-danger" *ngIf="usernameInput.invalid && usernameInput.touched">Please enter an username</span>
-
-    <div class="input-group mb-3">
-      <span class="input-group-text"><fa-icon [icon]="faUser"></fa-icon></span>
-      <input type="text" class="form-control" name="firstName" placeholder="Firstname" [(ngModel)]="user.firstName"
-             ngModel #firstNameInput="ngModel"/>
+  <div class="row">
+    <div class="col"><h3>Edit User #{{user?.id}} - {{user?.username}}</h3></div>
+  </div>
+  <form class="row" #userEditForm="ngForm" (ngSubmit)="onEdit(userEditForm.value)">
+    <div class="col-6 mb-3">
+      <div class="input-group">
+        <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faUser"></fa-icon></span>
+        <input type="text" class="form-control" name="username" placeholder="Username" [(ngModel)]="user.username"
+               ngModel #usernameInput="ngModel" required/>
+      </div>
+      <span class="help-note text-danger" *ngIf="usernameInput.invalid && usernameInput.touched">Please enter an username</span>
     </div>
 
-    <div class="input-group mb-3">
-      <span class="input-group-text"><fa-icon [icon]="faUser"></fa-icon></span>
-      <input type="text" class="form-control" name="lastName" placeholder="Lastname" [(ngModel)]="user.lastName"
-             ngModel #lastNameInput="ngModel"/>
+    <div class="col-6 mb-3">
+      <div class="input-group">
+        <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faEmail"></fa-icon></span>
+        <input type="email" class="form-control" name="email" placeholder="E-Mail" [(ngModel)]="user.email"
+               ngModel #emailInput="ngModel" required/>
+      </div>
+      <span class="help-note text-danger" *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</span>
     </div>
 
-    <div class="input-group mb-3">
-      <span class="input-group-text"><fa-icon [icon]="faEmail"></fa-icon></span>
-      <input type="email" class="form-control" name="email" placeholder="E-Mail" [(ngModel)]="user.email"
-             ngModel #emailInput="ngModel" required/>
+    <div class="col-6 mb-3">
+      <div class="input-group">
+        <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faUser"></fa-icon></span>
+        <input type="text" class="form-control" name="firstName" placeholder="Firstname" [(ngModel)]="user.firstName"/>
+      </div>
     </div>
-    <span class="help-block color-danger" *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</span>
 
-    <section class="input-group-btn">
-      <button type="submit" [disabled]="userEditForm.invalid || showLoading" class="btn btn-edit float-right"
-              name="edit-button">
-        <fa-icon *ngIf="showLoading" [icon]="faSpinner"></fa-icon>
+    <div class="col-6 mb-3">
+      <div class="input-group">
+        <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faUser"></fa-icon></span>
+        <input type="text" class="form-control" name="lastName" placeholder="Lastname" [(ngModel)]="user.lastName"/>
+      </div>
+    </div>
+
+    <section class="col-12 align-self-end">
+      <button type="submit" [disabled]="userEditForm.invalid || showLoading" class="btn btn-primary float-right" name="edit-user-button">
         <span *ngIf="showLoading">Loading...</span>
         <span *ngIf="!showLoading">Save</span>
+      </button>
+      <button class="btn btn-secondary float-right mr-1" name="cancel-button" (click)="onCancel()" ><span>Cancel</span></button>
+    </section>
+  </form>
+</section>
+<hr/>
+<section class="container" *ngIf="!showLoading && user">
+  <div class="row">
+    <div class="col-12"><h3>Make user admin</h3></div>
+    <p class="col-md-8 col-sm-12">Do you want to increase the privileges for this user?</p>
+    <section class="col-md-4 align-self-end">
+      <button class="btn btn-primary float-right" name="increase-privilege-button" (click)="onIncreasePrivileges()">
+        <span>Upgrade to Admin</span>
+      </button>
+    </section>
+  </div>
+</section>
+<hr/>
+<section class="container" *ngIf="!showLoading && user">
+  <div class="row">
+    <div class="col-12"><h3>Change password</h3></div>
+    <p class="col-12">Do you want to change the existing password?</p>
+  </div>
+  <form class="row" #changePasswordForm="ngForm" (ngSubmit)="onPasswordChange(changePasswordForm.value)">
+    <div class="col-6 mb-3">
+      <div class="input-group">
+        <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faPassword"></fa-icon></span>
+        <input type="password" class="form-control" name="password" placeholder="Password"
+               ngModel #passwordInput="ngModel" required/>
+      </div>
+      <span class="help-note text-danger"
+            *ngIf="passwordInput.invalid && passwordInput.touched">Please enter a password</span>
+    </div>
+    <div class="col-6 mb-3">
+      <div class="input-group">
+        <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faPassword"></fa-icon></span>
+        <input type="password" class="form-control" name="passwordRepeat" placeholder="Repeat password"
+               ngModel #passwordRepeatInput="ngModel" required/>
+      </div>
+      <span class="help-note text-danger" *ngIf="passwordRepeatInput.invalid && passwordRepeatInput.touched">Please enter a password </span>
+      <span class="help-note text-danger" *ngIf="passwordInput.value !== passwordRepeatInput.value">Please repeat the password</span>
+    </div>
+    <section class="col-md-12 align-self-end">
+      <button [disabled]="changePasswordForm.invalid || showLoading" class="btn btn-primary float-right" name="change-password -button">
+        <span>Update password</span>
       </button>
     </section>
   </form>

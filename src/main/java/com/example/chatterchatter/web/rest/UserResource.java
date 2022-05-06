@@ -1,6 +1,7 @@
 package com.example.chatterchatter.web.rest;
 
 import com.example.chatterchatter.model.domain.User;
+import com.example.chatterchatter.model.dto.ChangePasswordDTO;
 import com.example.chatterchatter.model.dto.UserDTO;
 import com.example.chatterchatter.model.dto.UserRegisterDTO;
 import com.example.chatterchatter.service.UserService;
@@ -46,6 +47,21 @@ public class UserResource {
         UserDTO updatedUserDTO = convertUserToDTO(updatedUser);
         return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
     }
+
+    @PutMapping("/{userId}/increase-privileges")
+    public ResponseEntity<UserDTO> increasePrivileges(@PathVariable Long userId) throws Exception {
+        User updatedUser = userService.increasePrivileges(userId);
+        UserDTO updatedUserDTO = convertUserToDTO(updatedUser);
+        return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/{userId}/change-password")
+    public ResponseEntity<UserDTO> changePassword(@PathVariable Long userId, @RequestBody ChangePasswordDTO changePasswordDTO) throws Exception {
+        User updatedUser = userService.changePassword(userId, changePasswordDTO.getPassword(), changePasswordDTO.getPasswordRepeat());
+        UserDTO updatedUserDTO = convertUserToDTO(updatedUser);
+        return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
+    }
+
 
     @DeleteMapping("/{userId}/delete")
     public ResponseEntity<UserDTO> deleteUser(@PathVariable Long userId) throws Exception {

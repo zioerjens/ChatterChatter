@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -103,5 +104,21 @@ public class UserService implements UserServiceInterface {
 
     private String encodePassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    public User increasePrivileges(Long userId) throws Exception {
+        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
+        user.setRole(RoleEnum.ROLE_ADMIN);
+        user.getAuthorities().addAll(RoleEnum.ROLE_ADMIN.getAuthorities().stream().filter(a -> !user.getAuthorities().contains(a)).toList());
+        return userRepository.save(user);
+    }
+
+    public User changePassword(Long userId, String password, String passwordRepeat) throws Exception {
+        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
+        if(password == null || passwordRepeat == null || !passwordRepeat.equals(password)){
+            throw new Exception("Delivered password is invalid");
+        }
+        user.setPassword(encodePassword(password));
+        return userRepository.save(user);
     }
 }

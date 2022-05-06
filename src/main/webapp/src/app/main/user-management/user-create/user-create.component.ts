@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {faEnvelope, faKey, faPlus, faSpinner, faUser} from "@fortawesome/free-solid-svg-icons";
 import {Subscription} from "rxjs";
-import {User} from "../../../model/User";
 import {NotificationTypeEnum} from "../../../model/enum/notification-type.enum";
 import {UserService} from "../../../service/user.service";
 import {NotificationService} from "../../../utils/notification/notification.service";
@@ -12,7 +11,7 @@ import {Router} from "@angular/router";
   templateUrl: './user-create.component.html',
   styleUrls: ['./user-create.component.scss']
 })
-export class UserCreateComponent implements OnInit {
+export class UserCreateComponent implements OnInit,OnDestroy {
 
   faUser = faUser;
   faPassword = faKey;
@@ -25,18 +24,27 @@ export class UserCreateComponent implements OnInit {
 
   constructor(private userService: UserService,
               private notificationService: NotificationService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit(): void {
   }
 
+  ngOnDestroy():void {
+    this.subs.forEach( s => s.unsubscribe());
+  }
+
   onCreate(formData: FormData) {
-      if(!formData){
-        return;
-      }
-      this.userService.addUser(formData).subscribe( res => {
-        this.notificationService.notify(NotificationTypeEnum.SUCCESS, 'User successfully created');
-        this.router.navigateByUrl(`/users/management`);
-      });
+    if (!formData) {
+      return;
+    }
+    this.subs.push(this.userService.addUser(formData).subscribe(res => {
+      this.notificationService.notify(NotificationTypeEnum.SUCCESS, 'User successfully created');
+      this.router.navigateByUrl(`/users/management`);
+    }));
+  }
+
+  onCancel() {
+    this.router.navigateByUrl(`/users/management`);
   }
 }
