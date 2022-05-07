@@ -64,10 +64,7 @@ export class SubjectComponent implements OnInit, OnDestroy {
     this.createSubjectViewVisible = false;
   }
 
-  onCreateSubject(subject
-                    :
-                    SubjectDTO
-  ) {
+  onCreateSubject(subject: SubjectDTO) {
     this.subjectService.create(subject).subscribe(result => {
       this.subjects.push(result);
       this.onCloseCreateSubjectView();
