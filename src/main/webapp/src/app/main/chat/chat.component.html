@@ -1,5 +1,6 @@
 <h1>{{subject?.title}}</h1>
 <ng-container *ngFor="let message of messages">
+  <p [textContent]="message.time"></p>
   <p [textContent]="message.content"></p>
 </ng-container>
 <form class="list-group-item"

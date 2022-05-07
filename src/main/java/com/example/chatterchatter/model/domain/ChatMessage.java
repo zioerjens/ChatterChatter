@@ -2,11 +2,10 @@ package com.example.chatterchatter.model.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -26,10 +25,14 @@ public class ChatMessage {
     @Column(nullable = false, unique = true)
     String content;
 
-    @CreatedDate
     @Column(nullable = false)
-    LocalDate time;
+    LocalDateTime time;
 
     @ManyToOne
     Subject subject;
+
+    @PrePersist
+    protected void onCreate() {
+        time = LocalDateTime.now();
+    }
 }

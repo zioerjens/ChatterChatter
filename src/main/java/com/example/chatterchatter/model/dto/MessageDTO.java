@@ -5,13 +5,13 @@ import com.example.chatterchatter.model.domain.Subject;
 import com.example.chatterchatter.model.domain.User;
 import lombok.Value;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Value
 public class MessageDTO {
     Long id;
-    LocalDate time;
+    LocalDateTime time;
     Long subjectId;
     String content;
 
