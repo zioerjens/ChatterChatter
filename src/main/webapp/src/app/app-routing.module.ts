@@ -6,10 +6,12 @@ import {RegisterComponent} from "./main/register/register.component";
 import {UserListComponent} from "./main/user-management/user-list/user-list.component";
 import {LogoutComponent} from "./main/logout/logout.component";
 import {UserEditComponent} from "./main/user-management/user-edit/user-edit.component";
+import {SubjectComponent} from "./main/subject/subject.component";
 import {ChatComponent} from "./main/chat/chat.component";
 
 const routes: Routes = [
-  {path: 'chat', component: ChatComponent},
+  {path: 'chat', component: SubjectComponent},
+  {path: 'chat/:id', component: ChatComponent},
   {path: 'hello', component: HelloWorldComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent},

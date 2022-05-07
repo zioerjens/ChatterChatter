@@ -1,10 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@use 'src/app/main/variables' as v;
 @import 'node_modules/angular-notifier/styles.scss';
 @import '~bootstrap/dist/css/bootstrap.css';
 
 
 body {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 0;
+  background-color: v.$background;
 }

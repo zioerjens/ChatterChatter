@@ -1,11 +1,11 @@
-<h1>Chats</h1>
-<h2>Select a chat room to join</h2>
 <main class="list-group">
+  <h1>Chats</h1>
+  <h2>Select a chat room to join</h2>
   <div class="subject-container" *ngFor="let subject of subjects">
-    <button class="list-group-item list-group-item-action"
-            [textContent]="subject.title"
-            (click)="onShowSubject(subject.id)">
-    </button>
+    <a class="list-group-item list-group-item-action"
+       [textContent]="subject.title"
+       [href]="'chat/' + subject.id">
+    </a>
     <button class="btn btn-outline-secondary" (click)="onDeleteSubject(subject.id)">
       <fa-icon [icon]="faTrash"></fa-icon>
     </button>
