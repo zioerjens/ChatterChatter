@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable, Subject} from "rxjs";
 import {UserLogin} from "../model/UserLogin";
 import {User} from "../model/User";
@@ -46,7 +46,7 @@ export class AuthenticationService {
   }
 
   addUserToLocalStorage(user: User | null): void {
-    if(user){
+    if (user) {
       this.loggedInUsername = user.username;
       localStorage.setItem('user', JSON.stringify(user));
     }
@@ -62,12 +62,12 @@ export class AuthenticationService {
     return token;
   }
 
-  isTokenValid(): boolean{
+  isTokenValid(): boolean {
     this.getTokenFromLocalStorage();
-    if (this.token != null && this.token !== ''){
+    if (this.token != null && this.token !== '') {
       const decodedToken = this.jwtHelper.decodeToken(this.token);
-      if(decodedToken.sub != null || decodedToken.sub !=''){
-        if(!this.jwtHelper.isTokenExpired(this.token)){
+      if (decodedToken.sub != null || decodedToken.sub != '') {
+        if (!this.jwtHelper.isTokenExpired(this.token)) {
           this.loggedInUsername = decodedToken.sub;
           this.$loggedIn.next(true);
           return true;
@@ -82,6 +82,10 @@ export class AuthenticationService {
 
   isLoggedIn(): Observable<boolean> {
     return this.$loggedIn.asObservable();
+  }
+
+  isLoggedInUser(user: User): boolean {
+    return this.loggedInUsername === user.username;
   }
 
 }

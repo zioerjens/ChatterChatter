@@ -5,8 +5,10 @@ import {SubjectDTO} from "../../model/SubjectDTO";
 import {ActivatedRoute} from "@angular/router";
 import {SubjectService} from "../../service/subject.service";
 import {interval, Observable} from "rxjs";
-import {isNotEmpty, mapById} from "../../../util/util";
+import {isEmpty, isNotEmpty, mapById} from "../../../util/util";
 import {NgForm} from "@angular/forms";
+import {User} from "../../model/User";
+import {AuthenticationService} from "../../service/authentication.service";
 
 @Component({
   selector: 'app-chat-component',
@@ -22,7 +24,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private subjectService: SubjectService
+    private subjectService: SubjectService,
+    private authService: AuthenticationService
   ) {
   }
 
@@ -63,5 +66,34 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   isSubjectIdLoaded(): boolean {
     return isNotEmpty(this.subject?.id);
+  }
+
+  toMessageName(sender: User | undefined): string {
+    if (isEmpty(sender?.firstName)
+      || isEmpty(sender?.lastName)
+      || sender!.firstName === ''
+      || sender!.lastName === '') {
+      return sender!.username;
+    }
+    return sender!.firstName + ' ' + sender!.lastName;
+  }
+
+  toMessageTime(time: string | undefined): string {
+    if (isEmpty(time)) {
+      return '';
+    }
+    const timeObject = new Date(time!);
+    const hours = timeObject.getHours();
+    const minutes = timeObject.getMinutes();
+    const minuteString = minutes < 10 ? '0' + minutes : minutes;
+    const hoursString = hours < 10 ? '0' + hours : hours;
+    return hoursString + ':' + minuteString;
+  }
+
+  isLoggedIn(sender: User | undefined) {
+    if (isEmpty(sender)) {
+      return false;
+    }
+    return this.authService.isLoggedInUser(sender!);
   }
 }

@@ -19,6 +19,16 @@ public class UserDTO implements Serializable {
     private String username;
     private String email;
 
+    public static UserDTO from(User user) {
+        return new UserDTO(
+                user.getId(),
+                user.getFirstname(),
+                user.getLastname(),
+                user.getUsername(),
+                user.getEmail()
+        );
+    }
+
     public User toDomain() {
         User user = new User();
         user.setId(this.getId());

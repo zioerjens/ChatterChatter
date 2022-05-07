@@ -1,8 +1,11 @@
 <h1>{{subject?.title}}</h1>
-<ng-container *ngFor="let message of messages">
-  <p [textContent]="message.time"></p>
-  <p [textContent]="message.content"></p>
-</ng-container>
+<div class="message-holder">
+  <div class="message" [class.own]="isLoggedIn(message.sender)" *ngFor="let message of messages">
+    <p class="username" [textContent]="toMessageName(message.sender)"></p>
+    <p class="content" [textContent]="message.content"></p>
+    <p class="time" [textContent]="toMessageTime(message.time)"></p>
+  </div>
+</div>
 <form class="list-group-item"
       #messageForm="ngForm"
       (ngSubmit)="onCreateMessage(messageForm, messageForm.value)">
