@@ -1,0 +1,14 @@
+<h3>User management</h3>
+<section class="container">
+  <div class="card w-25" *ngFor="let user of users">
+    <div class="card-body">
+      <h5 class="card-title">{{user.username}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{user.email}}</h6>
+      <p class="card-text" *ngIf="user.firstName!=null || user.lastName != null">{{user.firstName}} {{user.lastName}}</p>
+      <section class="actions">
+        <button class="btn btn-primary mr-1" (click)="openEdit(user.id)">Edit</button>
+        <a (click)="onDelete(user.id)" class="btn btn-secondary">Delete</a>
+      </section>
+    </div>
+  </div>
+</section>

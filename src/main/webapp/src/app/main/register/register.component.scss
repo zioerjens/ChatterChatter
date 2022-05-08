@@ -1,0 +1,45 @@
+@use 'src/app/main/variables' as v;
+
+.register-card {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: 500px;
+  width: 600px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: v.$background;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+
+.input-group-text {
+  background: v.$primary;
+  color: v.$light;
+}
+
+.btn-register {
+  width: 100%;
+  background: v.$primary;
+  color: v.$light;
+}
+
+.register-container {
+  padding: 0 2rem;
+}
+
+.color-danger {
+  color: v.$danger;
+}
+
+.sign-in-link {
+  color: v.$primary;
+  text-decoration: none;
+  padding-left: 2pt;
+}
+
+

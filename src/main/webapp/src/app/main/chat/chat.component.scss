@@ -1,0 +1,42 @@
+@use 'src/app/main/variables' as v;
+
+.message-holder {
+  max-height: 70%;
+  display: flex;
+  flex-direction: column;
+  background-color: antiquewhite;
+  padding: 1rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.message {
+  background-color: v.$other-messages;
+  color: black;
+  width: fit-content;
+  max-width: 80%;
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.6rem;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+  margin: 0.2rem;
+
+  & > p {
+    margin: 0;
+  }
+
+  .username {
+    font-size: 0.9rem;
+    color: v.$message-user;
+  }
+
+  .time {
+    text-align: end;
+    font-size: 0.8rem;
+    color: v.$message-time;
+  }
+
+  &.own {
+    align-self: end;
+    background-color: v.$own-messages;
+  }
+}
