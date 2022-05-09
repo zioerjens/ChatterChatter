@@ -4,7 +4,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {HomeComponent} from './main/home/home.component';
 import {RouterModule} from "@angular/router";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {JwtInterceptor} from "./interceptor/jwt.interceptor";
@@ -17,16 +16,16 @@ import {FormsModule} from "@angular/forms";
 import {LogoutComponent} from './main/logout/logout.component';
 import {NavigationComponent} from './utils/navigation/navigation.component';
 import {UserManagementModule} from "./main/user-management/user-management.module";
+import {ChatComponent} from './main/chat/chat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
-    HomeComponent,
     LoginComponent,
     RegisterComponent,
     LogoutComponent,
-    NavigationComponent
+    ChatComponent
   ],
   imports: [
     UserManagementModule,
