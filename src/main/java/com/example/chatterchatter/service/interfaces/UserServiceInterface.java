@@ -10,7 +10,7 @@ public interface UserServiceInterface {
 
     User findUserById(Long userId);
 
-    User addUser(User user);
+    User addUser(User user) throws Exception;
 
     User updateUser(Long userId, User user) throws Exception;
 

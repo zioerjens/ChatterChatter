@@ -40,8 +40,7 @@ public class AuthenticationService implements AuthenticationServiceInterface {
         user.setEmail(email);
         user.setFirstname(firstName);
         user.setLastname(lastName);
-        String encodedPassword = encodePassword(password);
-        user.setPassword(encodedPassword);
+        user.setPassword(encodePassword(password));
         user.setJoinDate(new Date());
         user.setActive(true);
         user.setLocked(false);

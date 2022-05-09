@@ -32,6 +32,18 @@ export class UserService {
     return this.http.delete<CustomHttpResponse | HttpErrorResponse>(`/api/users/${userId}/delete`);
   }
 
+  increasePrivileges(userId:number): Observable<User>{
+    return this.http.put<User>(`/api/users/${userId}/increase-privileges`,{});
+  }
+
+  changeUserPassword(userId: number, password:string, passwordRepeat:string): Observable<User> {
+    const passwordObj = {
+      password: password,
+      passwordRepeat: passwordRepeat
+    }
+    return this.http.put<User>(`/api/users/${userId}/change-password`,passwordObj);
+  }
+
   addUsersToLocalStorage(users: User[]): void {
     localStorage.setItem('users', JSON.stringify(users));
   }

@@ -1,13 +1,13 @@
 package com.example.chatterchatter.web.rest;
 
 import com.example.chatterchatter.model.domain.User;
+import com.example.chatterchatter.model.dto.ChangePasswordDTO;
 import com.example.chatterchatter.model.dto.UserDTO;
+import com.example.chatterchatter.model.dto.UserRegisterDTO;
 import com.example.chatterchatter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public class UserResource {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserRegisterDTO userDTO) throws Exception {
         if (userDTO == null) {
             throw new IllegalStateException("UserResource.addUser() - request body was empty");
         }
@@ -54,6 +54,21 @@ public class UserResource {
         return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
     }
 
+    @PutMapping("/{userId}/increase-privileges")
+    public ResponseEntity<UserDTO> increasePrivileges(@PathVariable Long userId) throws Exception {
+        User updatedUser = userService.increasePrivileges(userId);
+        UserDTO updatedUserDTO = convertUserToDTO(updatedUser);
+        return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/{userId}/change-password")
+    public ResponseEntity<UserDTO> changePassword(@PathVariable Long userId, @RequestBody ChangePasswordDTO changePasswordDTO) throws Exception {
+        User updatedUser = userService.changePassword(userId, changePasswordDTO.getPassword(), changePasswordDTO.getPasswordRepeat());
+        UserDTO updatedUserDTO = convertUserToDTO(updatedUser);
+        return new ResponseEntity<>(updatedUserDTO, HttpStatus.OK);
+    }
+
+
     @DeleteMapping("/{userId}/delete")
     public ResponseEntity<UserDTO> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
@@ -70,6 +85,7 @@ public class UserResource {
         dto.setUsername(user.getUsername());
         dto.setLastName(user.getLastname());
         dto.setFirstName(user.getFirstname());
+        dto.setRole(user.getRole());
         return dto;
     }
 }

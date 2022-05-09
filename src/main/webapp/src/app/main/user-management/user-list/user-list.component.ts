@@ -5,6 +5,7 @@ import {User} from "../../../model/User";
 import {Router} from "@angular/router";
 import {NotificationService} from "../../../utils/notification/notification.service";
 import {NotificationTypeEnum} from "../../../model/enum/notification-type.enum";
+import {faEdit, faPlus, faTrash} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-list',
@@ -12,6 +13,9 @@ import {NotificationTypeEnum} from "../../../model/enum/notification-type.enum";
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
+  faPlus = faPlus;
+  faEdit = faEdit;
+  faDelete = faTrash
 
   showLoading: boolean = false;
   private subs: Subscription[] = [];
@@ -45,5 +49,9 @@ export class UserListComponent implements OnInit {
       this.ngOnInit();
     })
 
+  }
+
+  onCreate() {
+    this.router.navigateByUrl(`/users/create`);
   }
 }

@@ -1,6 +1,7 @@
 package com.example.chatterchatter.model.dto;
 
 import com.example.chatterchatter.model.domain.User;
+import com.example.chatterchatter.model.enums.RoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class UserDTO implements Serializable {
     private String lastName;
     private String username;
     private String email;
+    private RoleEnum role;
 
     public static UserDTO from(User user) {
         return new UserDTO(
@@ -25,7 +27,8 @@ public class UserDTO implements Serializable {
                 user.getFirstname(),
                 user.getLastname(),
                 user.getUsername(),
-                user.getEmail()
+                user.getEmail(),
+                user.getRole()
         );
     }
 
@@ -36,6 +39,7 @@ public class UserDTO implements Serializable {
         user.setUsername(this.getUsername());
         user.setLastname(this.getLastName());
         user.setFirstname(this.getFirstName());
+        user.setRole(this.role);
         return user;
     }
 }

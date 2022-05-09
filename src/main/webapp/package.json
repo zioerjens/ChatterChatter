@@ -26,6 +26,7 @@
     "@popperjs/core": "^2.11.5",
     "angular-notifier": "^11.0.0",
     "bootstrap": "^4.6.1",
+    "jquery": "^3.6.0",
     "rxjs": "~7.5.0",
     "save": "^2.5.0",
     "sockjs": "^0.3.24",
