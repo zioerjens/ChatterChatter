@@ -5,7 +5,7 @@ import {SubjectDTO} from "../../model/SubjectDTO";
 import {ActivatedRoute} from "@angular/router";
 import {SubjectService} from "../../service/subject.service";
 import {interval, Observable} from "rxjs";
-import {isEmpty, isNotEmpty, mapById} from "../../../util/util";
+import {dateToTime, isEmpty, isNotEmpty, mapById} from "../../../util/util";
 import {NgForm} from "@angular/forms";
 import {User} from "../../model/User";
 import {AuthenticationService} from "../../service/authentication.service";
@@ -83,11 +83,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       return '';
     }
     const timeObject = new Date(time!);
-    const hours = timeObject.getHours();
-    const minutes = timeObject.getMinutes();
-    const minuteString = minutes < 10 ? '0' + minutes : minutes;
-    const hoursString = hours < 10 ? '0' + hours : hours;
-    return hoursString + ':' + minuteString;
+    return dateToTime(timeObject);
   }
 
   isLoggedIn(sender: User | undefined) {

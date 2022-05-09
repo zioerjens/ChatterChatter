@@ -31,3 +31,11 @@ export function requireNonNull<T>(obj: T) {
   }
   return obj!;
 }
+
+export function dateToTime(timeObject: Date): string {
+  const hours = timeObject.getHours();
+  const minutes = timeObject.getMinutes();
+  const minuteString = minutes < 10 ? '0' + minutes : minutes;
+  const hoursString = hours < 10 ? '0' + hours : hours;
+  return hoursString + ':' + minuteString;
+}
