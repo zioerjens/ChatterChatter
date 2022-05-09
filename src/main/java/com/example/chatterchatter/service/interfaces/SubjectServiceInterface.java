@@ -12,4 +12,6 @@ public interface SubjectServiceInterface {
     Subject create(SubjectDTO subjectDTO);
 
     void delete(Long subjectId);
+
+    Subject getById(Long id);
 }

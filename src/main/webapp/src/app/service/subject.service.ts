@@ -22,4 +22,8 @@ export class SubjectService {
   delete(subjectId: number): Observable<HttpResponse<unknown>> {
     return this.http.delete<HttpResponse<unknown>>('/api/subject/delete/' + subjectId);
   }
+
+  getById(subjectId: string): Observable<HttpResponse<SubjectDTO>> {
+    return this.http.get<SubjectDTO>('/api/subject/' + subjectId, {observe: 'response'});
+  }
 }

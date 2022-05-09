@@ -21,6 +21,16 @@ public class UserDTO implements Serializable {
     private String email;
     private RoleEnum role;
 
+    public static UserDTO from(User user) {
+        return new UserDTO(
+                user.getId(),
+                user.getFirstname(),
+                user.getLastname(),
+                user.getUsername(),
+                user.getEmail()
+        );
+    }
+
     public User toDomain() {
         User user = new User();
         user.setId(this.getId());

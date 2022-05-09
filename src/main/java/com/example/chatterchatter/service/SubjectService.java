@@ -32,4 +32,9 @@ public class SubjectService implements SubjectServiceInterface {
     public void delete(Long subjectId) {
         subjectRepository.deleteById(subjectId);
     }
+
+    @Override
+    public Subject getById(Long id) {
+        return subjectRepository.getById(id);
+    }
 }

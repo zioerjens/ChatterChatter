@@ -5,30 +5,43 @@ import com.example.chatterchatter.model.domain.Subject;
 import com.example.chatterchatter.model.domain.User;
 import lombok.Value;
 
-import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+
+import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
 @Value
 public class MessageDTO {
     Long id;
-    LocalDate time;
+    Date time;
+    UserDTO sender;
     Long subjectId;
     String content;
 
     public ChatMessage toDomain(User sender, Subject subject) {
+        var localDateTime = isNotEmpty(this.getTime())
+                ? this.getTime().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()
+                : null;
         var message = new ChatMessage();
         message.setId(this.getId());
         message.setSender(sender);
-        message.setTime(this.getTime());
+        message.setTime(localDateTime);
         message.setSubject(subject);
         message.setContent(this.getContent());
         return message;
     }
 
     public static MessageDTO from(ChatMessage message) {
+        var date = isNotEmpty(message.getTime())
+                ? Date.from(message.getTime().atZone(ZoneId.systemDefault()).toInstant())
+                : null;
         return new MessageDTO(
                 message.getId(),
-                message.getTime(),
+                date,
+                UserDTO.from(message.getSender()),
                 message.getSubject().getId(),
                 message.getContent()
         );

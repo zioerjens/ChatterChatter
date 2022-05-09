@@ -16,6 +16,7 @@ import {FormsModule} from "@angular/forms";
 import {LogoutComponent} from './main/logout/logout.component';
 import {NavigationComponent} from './utils/navigation/navigation.component';
 import {UserManagementModule} from "./main/user-management/user-management.module";
+import {SubjectComponent} from './main/subject/subject.component';
 import {ChatComponent} from './main/chat/chat.component';
 
 @NgModule({
@@ -25,6 +26,7 @@ import {ChatComponent} from './main/chat/chat.component';
     LoginComponent,
     RegisterComponent,
     LogoutComponent,
+    SubjectComponent,
     ChatComponent
   ],
   imports: [

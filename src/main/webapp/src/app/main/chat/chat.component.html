@@ -1,39 +1,23 @@
-<h1>Chats</h1>
-<h2>Select a chat room to join</h2>
-<main class="list-group">
-  <div class="subject-container" *ngFor="let subject of subjects">
-    <button class="list-group-item list-group-item-action"
-            [textContent]="subject.title"
-            (click)="onShowSubject(subject.id)">
-    </button>
-    <button class="btn btn-outline-secondary" (click)="onDeleteSubject(subject.id)">
-      <fa-icon [icon]="faTrash"></fa-icon>
-    </button>
+<h1>{{subject?.title}}</h1>
+<div class="message-holder">
+  <div class="message" [class.own]="isLoggedIn(message.sender)" *ngFor="let message of messages">
+    <p class="username" [textContent]="toMessageName(message.sender)"></p>
+    <p class="content" [textContent]="message.content"></p>
+    <p class="time" [textContent]="toMessageTime(message.time)"></p>
   </div>
-  <ng-container *ngIf="createSubjectViewVisible">
-    <form class="list-group-item"
-          #subjectForm="ngForm"
-          (ngSubmit)="onCreateSubject(subjectForm.value)">
-      <div class="input-group">
-        <input class="form-control" type="text" name="title" placeholder="Title" ngModel required/>
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary"
-                  type="submit"
-                  [disabled]="subjectForm.invalid"
-                  name="create-subject-button">
-            <span>Create Subject</span>
-          </button>
-          <button class="btn btn-outline-secondary"
-                  type="button"
-                  (click)="onCloseCreateSubjectView()">
-            <span>Cancel</span>
-          </button>
-        </div>
-      </div>
-    </form>
-  </ng-container>
-  <button class="list-group-item list-group-item-action active"
-          (click)="this.onOpenCreateSubjectView()">
-    <fa-icon [icon]="faPlus"></fa-icon>
-  </button>
-</main>
+</div>
+<form class="list-group-item"
+      #messageForm="ngForm"
+      (ngSubmit)="onCreateMessage(messageForm, messageForm.value)">
+  <div class="input-group">
+    <input class="form-control" type="text" name="content" placeholder="Message" ngModel required/>
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary"
+              type="submit"
+              [disabled]="messageForm.invalid || !isSubjectIdLoaded()"
+              name="create-message-button">
+        <span>Create Message</span>
+      </button>
+    </div>
+  </div>
+</form>

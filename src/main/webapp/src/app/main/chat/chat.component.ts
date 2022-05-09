@@ -1,107 +1,95 @@
-import {Component, OnInit} from '@angular/core';
-import {SubjectDTO} from "../../model/SubjectDTO";
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MessageDTO} from "../../model/MessageDTO";
-import {SubjectService} from "../../service/subject.service";
 import {MessageService} from "../../service/message.service";
-import {faPlus, faTrash} from '@fortawesome/free-solid-svg-icons';
-import {interval} from "rxjs";
+import {SubjectDTO} from "../../model/SubjectDTO";
+import {ActivatedRoute} from "@angular/router";
+import {SubjectService} from "../../service/subject.service";
+import {interval, Observable} from "rxjs";
+import {dateToTime, isEmpty, isNotEmpty, mapById} from "../../../util/util";
+import {NgForm} from "@angular/forms";
+import {User} from "../../model/User";
+import {AuthenticationService} from "../../service/authentication.service";
 
 @Component({
-  selector: 'app-chats',
+  selector: 'app-chat-component',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
+
+  subject: SubjectDTO | undefined | null;
+  messages: MessageDTO[] = [];
+  private refresher: Observable<any> | undefined;
 
   constructor(
+    private route: ActivatedRoute,
+    private messageService: MessageService,
     private subjectService: SubjectService,
-    private messageService: MessageService
+    private authService: AuthenticationService
   ) {
   }
 
-  subjects: SubjectDTO[] = [];
-  messages: MessageDTO[] = [];
-  selectedSubject: SubjectDTO | null | undefined;
-  createSubjectViewVisible = false;
-  faPlus = faPlus;
-  faTrash = faTrash;
-
   ngOnInit(): void {
-    interval(1000).subscribe(() => {
-      this.loadSubjects();
-      if (this.selectedSubject !== null && this.selectedSubject !== undefined) {
-        this.loadSubjectMessages(this.selectedSubject.id);
-      }
-    })
-  }
-
-  loadSubjects() {
-    this.subjectService.getAll().subscribe((result) => {
-      if (result.body !== undefined) {
-        result.body!.forEach(subject => {
-          if (this.subjects.find(s => s.id === subject.id) === undefined) {
-            this.subjects.push(subject);
-          }
+    this.route.params.subscribe(params => {
+      this.subjectService.getById(params['id']).subscribe(res => {
+        this.subject = res.body;
+        this.loadMessages();
+        this.refresher = interval(1000);
+        this.refresher.subscribe(() => {
+          this.loadMessages();
         })
-        // TODO @Sven extract method
-        if (this.subjects.length > result.body!.length) {
-          this.subjects.forEach(subject => {
-            if (result.body?.find(s => s.id === subject.id) === undefined) {
-              this.subjects.splice(this.subjects.indexOf(subject), 1);
-            }
-          })
+      })
+    });
+  }
+
+  // TODO @Sven needed?
+  ngOnDestroy() {
+    this.refresher = undefined;
+  }
+
+  private loadMessages() {
+    if (isNotEmpty(this.subject?.id))
+      this.messageService.getBySubjectId(this.subject!.id!).subscribe(res => {
+        if (isNotEmpty(res.body)) {
+          mapById(this.messages, res.body!);
         }
-      }
-    })
+      });
   }
 
-  onDeleteSubject(subjectId: number | undefined) {
-    if (subjectId === undefined) {
-      return;
-    }
-    this.subjectService.delete(subjectId).subscribe(() => {
-      const deletedSubject = this.subjects.find(subject => subject.id === subjectId);
-      if (deletedSubject === undefined) {
-        throw new Error('onDeleteSubject - subject could not be found');
-      }
-      this.subjects.splice(this.subjects.indexOf(deletedSubject), 1);
+  onCreateMessage(messageForm: NgForm, message: MessageDTO) {
+    message.subjectId = this.subject?.id!;
+    this.messageService.create(message).subscribe(result => {
+      this.messages.push(result);
+      messageForm.reset({});
     });
   }
 
-  onOpenCreateSubjectView() {
-    this.createSubjectViewVisible = true;
+  isSubjectIdLoaded(): boolean {
+    return isNotEmpty(this.subject?.id);
   }
 
-  onCloseCreateSubjectView() {
-    this.createSubjectViewVisible = false;
-  }
-
-  onCreateSubject(subject: SubjectDTO) {
-    this.subjectService.create(subject).subscribe(result => {
-      this.subjects.push(result);
-      this.onCloseCreateSubjectView();
-    });
-  }
-
-  onShowSubject(subjectId: number | undefined) {
-    if (subjectId === undefined) {
-      throw new Error('id should not be null');
+  toMessageName(sender: User | undefined): string {
+    if (isEmpty(sender?.firstName)
+      || isEmpty(sender?.lastName)
+      || sender!.firstName === ''
+      || sender!.lastName === '') {
+      return sender!.username;
     }
-    this.selectedSubject = this.subjects.find(s => s.id === subjectId);
-    this.loadSubjectMessages(subjectId);
+    return sender!.firstName + ' ' + sender!.lastName;
   }
 
-  loadSubjectMessages(subjectId: number | undefined) {
-    if (subjectId === undefined) {
-      throw new Error('id should not be null');
+  toMessageTime(time: string | undefined): string {
+    if (isEmpty(time)) {
+      return '';
     }
-    this.messageService.getBySubjectId(subjectId).subscribe((result) => {
-      this.messages = result.body ?? [];
-    })
+    const timeObject = new Date(time!);
+    return dateToTime(timeObject);
   }
 
-  onCreateMessage(message: MessageDTO) {
-    message.subjectId = <number>this.subjects[0]?.id;
-    this.messageService.create(message).subscribe();
+  isLoggedIn(sender: User | undefined) {
+    if (isEmpty(sender)) {
+      return false;
+    }
+    return this.authService.isLoggedInUser(sender!);
   }
 }
