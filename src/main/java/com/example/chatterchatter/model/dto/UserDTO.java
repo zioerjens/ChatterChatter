@@ -27,7 +27,8 @@ public class UserDTO implements Serializable {
                 user.getFirstname(),
                 user.getLastname(),
                 user.getUsername(),
-                user.getEmail()
+                user.getEmail(),
+                user.getRole()
         );
     }
 
