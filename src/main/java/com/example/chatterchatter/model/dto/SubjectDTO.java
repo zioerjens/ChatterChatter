@@ -3,11 +3,15 @@ package com.example.chatterchatter.model.dto;
 import com.example.chatterchatter.model.domain.Subject;
 import lombok.Value;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Value
 public class SubjectDTO {
+
     Long id;
+
+    @NotBlank(message = "subject title can't be empty")
     String title;
 
     public static List<SubjectDTO> fromAll(List<Subject> subjects) {

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Getter
@@ -17,6 +18,7 @@ public class Subject {
     private Long id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Subject title can't be empty")
     String title;
 
 }

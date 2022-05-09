@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @Getter
@@ -13,10 +15,19 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRegisterDTO implements Serializable {
+
+    @NotBlank(message = "username can't be empty")
     private String username;
+
+    @Email
+    @NotBlank(message = "email can't be empty")
     private String email;
+
     private String firstName;
+
     private String lastName;
+
+    @NotBlank(message = "password can't be empty")
     private String password;
 
     public User toDomain() {
@@ -25,6 +36,7 @@ public class UserRegisterDTO implements Serializable {
         user.setUsername(this.getUsername());
         user.setLastname(this.getLastName());
         user.setFirstname(this.getFirstName());
+        user.setPassword(this.getPassword());
         return user;
     }
 }

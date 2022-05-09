@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Getter
@@ -14,11 +17,22 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO implements Serializable {
+
+    @NotNull
     private Long id;
-    private String firstName;
-    private String lastName;
+
+    @NotBlank(message = "username can't be empty")
     private String username;
+
+    private String firstName;
+
+    private String lastName;
+
+    @Email
+    @NotBlank(message = "email can't be empty")
     private String email;
+
+    @NotNull
     private RoleEnum role;
 
     public static UserDTO from(User user) {

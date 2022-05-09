@@ -5,6 +5,9 @@ import com.example.chatterchatter.model.domain.Subject;
 import com.example.chatterchatter.model.domain.User;
 import lombok.Value;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -13,18 +16,21 @@ import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 
 @Value
 public class MessageDTO {
+
     Long id;
+
     Date time;
+
     UserDTO sender;
+
+    @NotNull
     Long subjectId;
+
+    @NotBlank(message = "message content can't be empty")
     String content;
 
     public ChatMessage toDomain(User sender, Subject subject) {
-        var localDateTime = isNotEmpty(this.getTime())
-                ? this.getTime().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime()
-                : null;
+        var localDateTime = getLocalDateTime();
         var message = new ChatMessage();
         message.setId(this.getId());
         message.setSender(sender);
@@ -34,10 +40,16 @@ public class MessageDTO {
         return message;
     }
 
-    public static MessageDTO from(ChatMessage message) {
-        var date = isNotEmpty(message.getTime())
-                ? Date.from(message.getTime().atZone(ZoneId.systemDefault()).toInstant())
+    private LocalDateTime getLocalDateTime() {
+        return isNotEmpty(this.getTime())
+                ? this.getTime().toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime()
                 : null;
+    }
+
+    public static MessageDTO from(ChatMessage message) {
+        var date = dateFromChatMessage(message);
         return new MessageDTO(
                 message.getId(),
                 date,
@@ -45,6 +57,12 @@ public class MessageDTO {
                 message.getSubject().getId(),
                 message.getContent()
         );
+    }
+
+    private static Date dateFromChatMessage(ChatMessage message) {
+        return isNotEmpty(message.getTime())
+                ? Date.from(message.getTime().atZone(ZoneId.systemDefault()).toInstant())
+                : null;
     }
 
     public static List<MessageDTO> fromAll(List<ChatMessage> messages) {
