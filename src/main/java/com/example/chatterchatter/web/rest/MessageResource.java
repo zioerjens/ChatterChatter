@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,7 +30,7 @@ public class MessageResource {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<MessageDTO> create(@RequestBody MessageDTO messageDTO) {
+    public ResponseEntity<MessageDTO> create(@RequestBody @Valid MessageDTO messageDTO) {
         var message = messageService.create(messageDTO);
         return new ResponseEntity<>(MessageDTO.from(message), HttpStatus.OK);
     }

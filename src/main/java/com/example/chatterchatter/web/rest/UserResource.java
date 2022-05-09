@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class UserResource {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserRegisterDTO userDTO) throws Exception {
+    public ResponseEntity<UserDTO> addUser(@RequestBody @Valid UserRegisterDTO userDTO) throws Exception {
         if (userDTO == null) {
             throw new IllegalStateException("UserResource.addUser() - request body was empty");
         }

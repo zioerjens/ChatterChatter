@@ -38,9 +38,9 @@ public class UserDTO implements Serializable {
     public static UserDTO from(User user) {
         return new UserDTO(
                 user.getId(),
+                user.getUsername(),
                 user.getFirstname(),
                 user.getLastname(),
-                user.getUsername(),
                 user.getEmail(),
                 user.getRole()
         );
@@ -51,8 +51,8 @@ public class UserDTO implements Serializable {
         user.setId(this.getId());
         user.setEmail(this.getEmail());
         user.setUsername(this.getUsername());
-        user.setLastname(this.getLastName());
         user.setFirstname(this.getFirstName());
+        user.setLastname(this.getLastName());
         user.setRole(this.role);
         return user;
     }
