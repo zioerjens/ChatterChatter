@@ -37,7 +37,7 @@ public class UserResource {
         if (userDTO == null) {
             throw new IllegalStateException("UserResource.addUser() - request body was empty");
         }
-        User user = convertRegisterUserDTOToDomain(userDTO);
+        User user = userDTO.toDomain();
         User savedUser = userService.addUser(user);
         UserDTO dto = convertUserToDTO(savedUser);
         return new ResponseEntity<>(dto, HttpStatus.OK);
@@ -87,33 +87,5 @@ public class UserResource {
         dto.setFirstName(user.getFirstname());
         dto.setRole(user.getRole());
         return dto;
-    }
-
-    private User convertUserDTOToDomain(UserDTO userDTO) {
-        if (userDTO == null) {
-            return null;
-        }
-        User user = new User();
-        user.setId(userDTO.getId());
-        user.setEmail(userDTO.getEmail());
-        user.setUsername(userDTO.getUsername());
-        user.setLastname(userDTO.getLastName());
-        user.setFirstname(userDTO.getFirstName());
-        user.setRole(userDTO.getRole());
-
-        return user;
-    }
-
-    private User convertRegisterUserDTOToDomain(UserRegisterDTO userDTO) {
-        if (userDTO == null) {
-            return null;
-        }
-        User user = new User();
-        user.setEmail(userDTO.getEmail());
-        user.setUsername(userDTO.getUsername());
-        user.setLastname(userDTO.getLastName());
-        user.setFirstname(userDTO.getFirstName());
-        user.setPassword(userDTO.getPassword());
-        return user;
     }
 }
