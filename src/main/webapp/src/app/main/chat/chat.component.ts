@@ -1,4 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewChild
+} from '@angular/core';
 import {MessageDTO} from "../../model/MessageDTO";
 import {MessageService} from "../../service/message.service";
 import {SubjectDTO} from "../../model/SubjectDTO";
@@ -15,7 +24,14 @@ import {AuthenticationService} from "../../service/authentication.service";
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  @ViewChild('messageContainer') messageContainer!: ElementRef;
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateChatHeight();
+  }
 
   subject: SubjectDTO | undefined | null;
   messages: MessageDTO[] = [];
@@ -26,7 +42,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private subjectService: SubjectService,
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) {
   }
 
@@ -43,6 +60,31 @@ export class ChatComponent implements OnInit, OnDestroy {
         () => this.router.navigateByUrl('chat')
       )
     });
+  }
+
+  ngAfterViewInit() {
+    this.updateChatHeight();
+    this.scrollToBottom();
+  }
+
+  private updateChatHeight() {
+    const nav = window.getComputedStyle(document.getElementsByTagName("nav")[0]);
+    const navHeight = parseInt(nav.height) + parseInt(nav.marginBottom)
+    const h1 = window.getComputedStyle(document.getElementsByTagName("h1")[0]);
+    const h1Height = parseInt(h1.lineHeight) + parseInt(h1.marginTop) + parseInt(h1.marginBottom);
+    const form = window.getComputedStyle(document.getElementsByTagName("form")[0]);
+    const formHeight = parseInt(form.height) + parseInt(form.marginTop) + parseInt(form.marginBottom);
+
+    const desiredHeight = `${window.innerHeight
+    - navHeight
+    - h1Height
+    - formHeight}px`;
+
+    this.renderer.setStyle(this.messageContainer.nativeElement, "height", desiredHeight);
+  }
+
+  private scrollToBottom(): void {
+    this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
   }
 
   // TODO @Sven needed?
