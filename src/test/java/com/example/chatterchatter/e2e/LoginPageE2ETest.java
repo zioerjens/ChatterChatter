@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class ChatterChatterE2ETest {
+public class LoginPageE2ETest {
 
     private static final String APP_URL = "http://localhost:4200";
 
