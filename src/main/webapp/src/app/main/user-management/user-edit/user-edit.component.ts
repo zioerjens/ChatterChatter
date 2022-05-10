@@ -29,15 +29,18 @@ export class UserEditComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private notificationService: NotificationService,
-              private userService: UserService) { }
+              private userService: UserService) {
+  }
 
   ngOnInit(): void {
     this.showLoading = true;
     this.routeSub = this.route.params.subscribe(params => {
-      this.subs.push(this.userService.getUserById(params['id']).subscribe(res =>{
-        this.user = res;
-        this.showLoading = false;
-      }));
+      this.subs.push(this.userService.getUserById(params['id']).subscribe(res => {
+          this.user = res;
+          this.showLoading = false;
+        },
+        () => this.router.navigateByUrl('users/management')
+      ));
     });
   }
 
@@ -47,10 +50,10 @@ export class UserEditComponent implements OnInit, OnDestroy {
   }
 
   onEdit(formData: User) {
-    if(!this.user){
+    if (!this.user) {
       return;
     }
-    this.subs.push(this.userService.updateUser(formData, this.user.id).subscribe( res => {
+    this.subs.push(this.userService.updateUser(formData, this.user.id).subscribe(res => {
       this.notificationService.notify(NotificationTypeEnum.SUCCESS, 'User successfully updated');
       this.router.navigateByUrl(`/users/management`);
     }));
@@ -61,7 +64,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   }
 
   onIncreasePrivileges() {
-    if(!this.user || !this.user.id){
+    if (!this.user || !this.user.id) {
       return;
     }
     this.subs.push(this.userService.increasePrivileges(this.user?.id).subscribe(res => {
@@ -70,12 +73,12 @@ export class UserEditComponent implements OnInit, OnDestroy {
   }
 
   onPasswordChange(changePasswordForm: ChangePassword) {
-    if(!this.user || !this.user.id){
+    if (!this.user || !this.user.id) {
       return;
     }
     const password = changePasswordForm.password;
     const passwordRepeat = changePasswordForm.passwordRepeat;
-    if(!password || !passwordRepeat){
+    if (!password || !passwordRepeat) {
       return;
     }
 
@@ -85,6 +88,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
   }
 
   isUserAdmin(): boolean {
-    return this.user?.role===UserRoleEnum.ADMIN;
+    return this.user?.role === UserRoleEnum.ADMIN;
   }
 }

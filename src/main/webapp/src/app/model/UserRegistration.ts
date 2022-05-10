@@ -1,4 +1,5 @@
 export class UserRegistration {
+
   username: string;
   firstName: string;
   lastName: string;
@@ -6,7 +7,7 @@ export class UserRegistration {
   password: string;
   passwordRepeat: string;
 
-  constructor(username: string, firstName: string, lastName:string, email:string, password:string, passwordRepeat:string){
+  constructor(username: string, firstName: string, lastName: string, email: string, password: string, passwordRepeat: string) {
     this.username = username;
     this.firstName = firstName;
     this.lastName = lastName;

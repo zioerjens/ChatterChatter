@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,19 +30,19 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public User findUserById(Long userId) {
-        return userRepository.findById(userId).orElse(null);
+    public Optional<User> findUserById(Long userId) {
+        return userRepository.findById(userId);
     }
 
     @Override
-    public User addUser(User users) throws Exception {
-        validateRegistration(users.getUsername(), users.getEmail());
+    public User addUser(User user) throws Exception {
+        validateRegistration(user.getUsername(), user.getEmail());
         User newUser = new User();
-        newUser.setUsername(users.getUsername());
-        newUser.setEmail(users.getEmail());
-        newUser.setFirstname(users.getFirstname());
-        newUser.setLastname(users.getLastname());
-        newUser.setPassword(encodePassword(users.getPassword()));
+        newUser.setUsername(user.getUsername());
+        newUser.setEmail(user.getEmail());
+        newUser.setFirstname(user.getFirstname());
+        newUser.setLastname(user.getLastname());
+        newUser.setPassword(encodePassword(user.getPassword()));
         newUser.setJoinDate(new Date());
         newUser.setActive(true);
         newUser.setLocked(false);
@@ -115,7 +114,7 @@ public class UserService implements UserServiceInterface {
 
     public User changePassword(Long userId, String password, String passwordRepeat) throws Exception {
         User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
-        if(password == null || passwordRepeat == null || !passwordRepeat.equals(password)){
+        if (passwordRepeat == null || !passwordRepeat.equals(password)) {
             throw new Exception("Delivered password is invalid");
         }
         user.setPassword(encodePassword(password));

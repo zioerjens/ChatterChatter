@@ -4,6 +4,7 @@ import com.example.chatterchatter.model.domain.Subject;
 import com.example.chatterchatter.model.dto.SubjectDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SubjectServiceInterface {
 
@@ -13,5 +14,5 @@ public interface SubjectServiceInterface {
 
     void delete(Long subjectId);
 
-    Subject getById(Long id);
+    Optional<Subject> findById(Long id);
 }

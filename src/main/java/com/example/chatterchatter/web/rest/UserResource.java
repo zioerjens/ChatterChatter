@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,13 +29,15 @@ public class UserResource {
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) throws Exception {
-        User user = userService.findUserById(userId);
+        User user = userService.findUserById(userId).orElseThrow(
+                () -> new EntityNotFoundException("User could not be found")
+        );
         UserDTO userDTO = convertUserToDTO(user);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserRegisterDTO userDTO) throws Exception {
+    public ResponseEntity<UserDTO> addUser(@RequestBody @Valid UserRegisterDTO userDTO) throws Exception {
         if (userDTO == null) {
             throw new IllegalStateException("UserResource.addUser() - request body was empty");
         }

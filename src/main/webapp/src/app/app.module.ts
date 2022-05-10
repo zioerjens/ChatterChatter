@@ -18,6 +18,7 @@ import {NavigationComponent} from './utils/navigation/navigation.component';
 import {UserManagementModule} from "./main/user-management/user-management.module";
 import {SubjectComponent} from './main/subject/subject.component';
 import {ChatComponent} from './main/chat/chat.component';
+import {ErrorInterceptor} from "./interceptor/error.interceptor";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {ChatComponent} from './main/chat/chat.component';
   ],
   providers: [
     AuthenticationGuard,
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
