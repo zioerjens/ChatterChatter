@@ -26,7 +26,7 @@ public class MessageDTO {
     @NotNull
     Long subjectId;
 
-    @NotBlank(message = "message content can't be empty")
+    @NotBlank(message = "The message content can't be empty")
     String content;
 
     public ChatMessage toDomain(User sender, Subject subject) {

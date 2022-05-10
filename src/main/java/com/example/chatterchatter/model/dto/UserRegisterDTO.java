@@ -16,18 +16,18 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class UserRegisterDTO implements Serializable {
 
-    @NotBlank(message = "username can't be empty")
+    @NotBlank(message = "The username can't be empty")
     private String username;
 
     @Email
-    @NotBlank(message = "email can't be empty")
+    @NotBlank(message = "The email can't be empty")
     private String email;
 
     private String firstName;
 
     private String lastName;
 
-    @NotBlank(message = "password can't be empty")
+    @NotBlank(message = "The password can't be empty")
     private String password;
 
     public User toDomain() {

@@ -11,7 +11,7 @@ public class SubjectDTO {
 
     Long id;
 
-    @NotBlank(message = "subject title can't be empty")
+    @NotBlank(message = "The subject title can't be empty")
     String title;
 
     public static List<SubjectDTO> fromAll(List<Subject> subjects) {

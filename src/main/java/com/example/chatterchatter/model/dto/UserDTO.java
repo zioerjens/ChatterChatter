@@ -21,7 +21,7 @@ public class UserDTO implements Serializable {
     @NotNull
     private Long id;
 
-    @NotBlank(message = "username can't be empty")
+    @NotBlank(message = "The username can't be empty")
     private String username;
 
     private String firstName;
@@ -29,7 +29,7 @@ public class UserDTO implements Serializable {
     private String lastName;
 
     @Email
-    @NotBlank(message = "email can't be empty")
+    @NotBlank(message = "The email can't be empty")
     private String email;
 
     @NotNull
