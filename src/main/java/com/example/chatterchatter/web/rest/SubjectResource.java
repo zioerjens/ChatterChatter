@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -37,7 +38,9 @@ public class SubjectResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<SubjectDTO> get(@PathVariable Long id) {
-        var subject = subjectService.getById(id);
+        var subject = subjectService.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Subject with id %d could not be found.".formatted(id))
+        );
         return new ResponseEntity<>(SubjectDTO.from(subject), HttpStatus.OK);
     }
 }

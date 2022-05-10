@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MessageDTO} from "../../model/MessageDTO";
 import {MessageService} from "../../service/message.service";
 import {SubjectDTO} from "../../model/SubjectDTO";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {SubjectService} from "../../service/subject.service";
 import {interval, Observable} from "rxjs";
 import {dateToTime, isEmpty, isNotEmpty, mapById} from "../../../util/util";
@@ -25,20 +25,23 @@ export class ChatComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private messageService: MessageService,
     private subjectService: SubjectService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private router: Router
   ) {
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.subjectService.getById(params['id']).subscribe(res => {
-        this.subject = res.body;
-        this.loadMessages();
-        this.refresher = interval(1000);
-        this.refresher.subscribe(() => {
+      this.subjectService.findById(params['id']).subscribe(res => {
+          this.subject = res.body;
           this.loadMessages();
-        })
-      })
+          this.refresher = interval(1000);
+          this.refresher.subscribe(() => {
+            this.loadMessages();
+          })
+        },
+        () => this.router.navigateByUrl('chat')
+      )
     });
   }
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -34,7 +35,7 @@ public class SubjectService implements SubjectServiceInterface {
     }
 
     @Override
-    public Subject getById(Long id) {
-        return subjectRepository.getById(id);
+    public Optional<Subject> findById(Long id) {
+        return subjectRepository.findById(id);
     }
 }
