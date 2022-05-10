@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -28,7 +29,9 @@ public class UserResource {
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) throws Exception {
-        User user = userService.findUserById(userId);
+        User user = userService.findUserById(userId).orElseThrow(
+                () -> new EntityNotFoundException("User could not be found")
+        );
         UserDTO userDTO = convertUserToDTO(user);
         return new ResponseEntity<>(userDTO, HttpStatus.OK);
     }

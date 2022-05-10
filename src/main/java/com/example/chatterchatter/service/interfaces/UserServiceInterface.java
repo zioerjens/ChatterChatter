@@ -3,12 +3,13 @@ package com.example.chatterchatter.service.interfaces;
 import com.example.chatterchatter.model.domain.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserServiceInterface {
 
     List<User> findAllUsers();
 
-    User findUserById(Long userId);
+    Optional<User> findUserById(Long userId);
 
     User addUser(User user) throws Exception;
 

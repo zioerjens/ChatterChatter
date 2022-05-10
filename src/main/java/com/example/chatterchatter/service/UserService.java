@@ -30,8 +30,8 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public User findUserById(Long userId) {
-        return userRepository.findById(userId).orElse(null);
+    public Optional<User> findUserById(Long userId) {
+        return userRepository.findById(userId);
     }
 
     @Override
