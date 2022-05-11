@@ -25,7 +25,7 @@ public class ChatMessage {
     @NotNull(message = "ChatMessage has to belong to a user")
     User sender;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @NotBlank(message = "ChatMessage content can't be null")
     String content;
 

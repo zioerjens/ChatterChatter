@@ -8,6 +8,7 @@
   padding: 1rem;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
+  overflow-y: scroll;
 }
 
 .message {
@@ -39,4 +40,8 @@
     align-self: end;
     background-color: v.$own-messages;
   }
+}
+
+#message-form {
+  margin-bottom: 20px;
 }
