@@ -14,7 +14,7 @@ import {MessageService} from "../../service/message.service";
 import {SubjectDTO} from "../../model/SubjectDTO";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SubjectService} from "../../service/subject.service";
-import {interval, Observable} from "rxjs";
+import {interval, Observable, Subject, takeUntil} from "rxjs";
 import {dateToTime, isEmpty, isNotEmpty, mapById} from "../../../util/util";
 import {NgForm} from "@angular/forms";
 import {User} from "../../model/User";
@@ -38,6 +38,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit, AfterVie
   messages: MessageDTO[] = [];
   private refresher: Observable<any> | undefined;
   private bottomScrollLocked = true;
+  private onDestroy$ = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -54,7 +55,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit, AfterVie
       this.subjectService.findById(params['id']).subscribe(res => {
           this.subject = res.body;
           this.loadMessages();
-          this.refresher = interval(1000);
+          this.refresher = interval(1000).pipe(
+            takeUntil(this.onDestroy$)
+          )
           this.refresher.subscribe(() => {
             this.loadMessages();
           })
@@ -71,6 +74,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit, AfterVie
 
   ngAfterViewChecked() {
     this.scrollToBottom();
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 
   private updateChatHeight() {
@@ -98,11 +105,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit, AfterVie
     if (this.bottomScrollLocked) {
       this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
     }
-  }
-
-  // TODO @Sven needed?
-  ngOnDestroy() {
-    this.refresher = undefined;
   }
 
   private loadMessages() {
