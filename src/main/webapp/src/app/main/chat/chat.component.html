@@ -1,5 +1,5 @@
 <h1>{{subject?.title}}</h1>
-<div class="message-holder" #messageContainer>
+<div class="message-holder" (scroll)="updateScrollLock()" #messageContainer>
   <div class="message" [class.own]="isLoggedIn(message.sender)" *ngFor="let message of messages">
     <p class="username" [textContent]="toMessageName(message.sender)"></p>
     <p class="content" [textContent]="message.content"></p>

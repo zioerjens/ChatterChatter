@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
@@ -24,7 +25,7 @@ import {AuthenticationService} from "../../service/authentication.service";
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ChatComponent implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
 
   @ViewChild('messageContainer') messageContainer!: ElementRef;
 
@@ -36,6 +37,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   subject: SubjectDTO | undefined | null;
   messages: MessageDTO[] = [];
   private refresher: Observable<any> | undefined;
+  private bottomScrollLocked = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -67,6 +69,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     this.scrollToBottom();
   }
 
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
   private updateChatHeight() {
     const nav = window.getComputedStyle(document.getElementsByTagName("nav")[0]);
     const navHeight = parseInt(nav.height) + parseInt(nav.marginBottom)
@@ -83,8 +89,15 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     this.renderer.setStyle(this.messageContainer.nativeElement, "height", desiredHeight);
   }
 
+  updateScrollLock(): void {
+    const element = this.messageContainer.nativeElement;
+    this.bottomScrollLocked = element.offsetHeight + element.scrollTop >= element.scrollHeight;
+  }
+
   private scrollToBottom(): void {
-    this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+    if (this.bottomScrollLocked) {
+      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+    }
   }
 
   // TODO @Sven needed?
