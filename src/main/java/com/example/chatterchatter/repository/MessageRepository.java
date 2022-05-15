@@ -10,4 +10,6 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<ChatMessage, Long> {
 
     List<ChatMessage> findAllBySubjectId(Long subjectId);
+
+    List<ChatMessage> findAllBySenderId(Long senderId);
 }
