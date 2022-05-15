@@ -33,7 +33,7 @@ public class ChatMessage {
     @NotNull
     LocalDateTime time;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull(message = "ChatMessage has to belong to a subject")
     Subject subject;
 

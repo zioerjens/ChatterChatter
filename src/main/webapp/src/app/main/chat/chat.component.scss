@@ -10,8 +10,9 @@
     overflow: hidden;
   }
 
-  a {
+  a, button {
     flex-grow: 0;
+    white-space: nowrap;
   }
 }
 
