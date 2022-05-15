@@ -1,5 +1,17 @@
 @use 'src/app/main/variables' as v;
 
+.title-container {
+  display: flex;
+
+  h1 {
+    flex-grow: 1;
+  }
+
+  a {
+    flex-grow: 0;
+  }
+}
+
 .message-holder {
   max-height: 70%;
   display: flex;
