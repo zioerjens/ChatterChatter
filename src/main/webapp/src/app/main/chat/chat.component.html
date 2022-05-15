@@ -1,7 +1,7 @@
 <div class="title-container">
   <h1>{{subject?.title}}</h1>
   <a href="/chat">
-    <button class="btn btn-primary">< Subjects</button>
+    <button class="btn btn-primary">back</button>
   </a>
 </div>
 <div class="message-holder" (scroll)="updateScrollLock()" #messageContainer>
@@ -16,7 +16,7 @@
       #messageForm="ngForm"
       (ngSubmit)="onCreateMessage(messageForm, messageForm.value)">
   <div class="input-group">
-    <input class="form-control" type="text" name="content" placeholder="Message" ngModel required/>
+    <input class="form-control" type="text" name="content" placeholder="Message" ngModel maxlength="250" required/>
     <div class="input-group-append">
       <button class="btn btn-outline-secondary"
               type="submit"

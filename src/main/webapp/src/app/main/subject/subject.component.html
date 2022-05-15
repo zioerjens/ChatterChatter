@@ -15,7 +15,7 @@
           #subjectForm="ngForm"
           (ngSubmit)="onCreateSubject(subjectForm.value)">
       <div class="input-group">
-        <input class="form-control" type="text" name="title" placeholder="Title" ngModel required/>
+        <input class="form-control" type="text" name="title" placeholder="Title" maxlength="100" ngModel required/>
         <div class="input-group-append">
           <button class="btn btn-outline-secondary"
                   type="submit"

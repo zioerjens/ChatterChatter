@@ -4,6 +4,7 @@ import com.example.chatterchatter.model.domain.Subject;
 import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Value
@@ -12,6 +13,7 @@ public class SubjectDTO {
     Long id;
 
     @NotBlank(message = "The subject title can't be empty")
+    @Size(max = 100, message = "The subject name is too long")
     String title;
 
     public static List<SubjectDTO> fromAll(List<Subject> subjects) {

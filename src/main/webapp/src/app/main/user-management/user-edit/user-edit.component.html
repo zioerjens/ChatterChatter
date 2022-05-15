@@ -7,7 +7,7 @@
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faUser"></fa-icon></span>
         <input type="text" class="form-control" name="username" placeholder="Username" [(ngModel)]="user.username"
-               ngModel #usernameInput="ngModel" required/>
+               ngModel #usernameInput="ngModel" maxlength="100" required/>
       </div>
       <span class="help-note text-danger" *ngIf="usernameInput.invalid && usernameInput.touched">Please enter an username</span>
     </div>
@@ -16,31 +16,36 @@
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faEmail"></fa-icon></span>
         <input type="email" class="form-control" name="email" placeholder="E-Mail" [(ngModel)]="user.email"
-               ngModel #emailInput="ngModel" required/>
+               ngModel #emailInput="ngModel" maxlength="100" required/>
       </div>
-      <span class="help-note text-danger" *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</span>
+      <span class="help-note text-danger"
+            *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</span>
     </div>
 
     <div class="col-6 mb-3">
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faUser"></fa-icon></span>
-        <input type="text" class="form-control" name="firstName" placeholder="Firstname" [(ngModel)]="user.firstName"/>
+        <input type="text" class="form-control" name="firstName" placeholder="Firstname" maxlength="100"
+               [(ngModel)]="user.firstName"/>
       </div>
     </div>
 
     <div class="col-6 mb-3">
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faUser"></fa-icon></span>
-        <input type="text" class="form-control" name="lastName" placeholder="Lastname" [(ngModel)]="user.lastName"/>
+        <input type="text" class="form-control" name="lastName" placeholder="Lastname" maxlength="100"
+               [(ngModel)]="user.lastName"/>
       </div>
     </div>
 
     <section class="col-12 align-self-end">
-      <button type="submit" [disabled]="userEditForm.invalid || showLoading" class="btn btn-primary float-right" name="edit-user-button">
+      <button type="submit" [disabled]="userEditForm.invalid || showLoading" class="btn btn-primary float-right"
+              name="edit-user-button">
         <span *ngIf="showLoading">Loading...</span>
         <span *ngIf="!showLoading">Save</span>
       </button>
-      <button class="btn btn-secondary float-right mr-1" name="cancel-button" (click)="onCancel()" ><span>Cancel</span></button>
+      <button class="btn btn-secondary float-right mr-1" name="cancel-button" (click)="onCancel()"><span>Cancel</span>
+      </button>
     </section>
   </form>
 </section>
@@ -67,7 +72,7 @@
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faPassword"></fa-icon></span>
         <input type="password" class="form-control" name="password" placeholder="Password"
-               ngModel #passwordInput="ngModel" required/>
+               ngModel #passwordInput="ngModel" maxlength="100" required/>
       </div>
       <span class="help-note text-danger"
             *ngIf="passwordInput.invalid && passwordInput.touched">Please enter a password</span>
@@ -76,13 +81,14 @@
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faPassword"></fa-icon></span>
         <input type="password" class="form-control" name="passwordRepeat" placeholder="Repeat password"
-               ngModel #passwordRepeatInput="ngModel" required/>
+               ngModel #passwordRepeatInput="ngModel" maxlength="100" required/>
       </div>
       <span class="help-note text-danger" *ngIf="passwordRepeatInput.invalid && passwordRepeatInput.touched">Please enter a password </span>
       <span class="help-note text-danger" *ngIf="passwordInput.value !== passwordRepeatInput.value">Please repeat the password</span>
     </div>
     <section class="col-md-12 align-self-end">
-      <button [disabled]="changePasswordForm.invalid || showLoading" class="btn btn-primary float-right" name="change-password -button">
+      <button [disabled]="changePasswordForm.invalid || showLoading" class="btn btn-primary float-right"
+              name="change-password -button">
         <span>Update password</span>
       </button>
     </section>

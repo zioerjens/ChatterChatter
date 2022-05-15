@@ -7,6 +7,7 @@ import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -27,6 +28,7 @@ public class MessageDTO {
     Long subjectId;
 
     @NotBlank(message = "The message content can't be empty")
+    @Size(max = 250, message = "The message is too long")
     String content;
 
     public ChatMessage toDomain(User sender, Subject subject) {
