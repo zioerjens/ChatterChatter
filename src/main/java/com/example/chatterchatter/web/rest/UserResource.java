@@ -8,6 +8,7 @@ import com.example.chatterchatter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -22,12 +23,14 @@ public class UserResource {
     private UserService userService;
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> users = userService.findAllUsersExceptDeleted().stream().map(this::convertUserToDTO).toList();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) throws Exception {
         User user = userService.findUserById(userId).orElseThrow(
                 () -> new EntityNotFoundException("User could not be found")
@@ -37,6 +40,7 @@ public class UserResource {
     }
 
     @PostMapping("/add")
+    @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserDTO> addUser(@RequestBody @Valid UserRegisterDTO userDTO) throws Exception {
         if (userDTO == null) {
             throw new IllegalStateException("UserResource.addUser() - request body was empty");
@@ -48,6 +52,7 @@ public class UserResource {
     }
 
     @PutMapping("/{userId}/update")
+    @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) throws Exception {
         if (userDTO == null) {
             throw new IllegalStateException("UserResource.updateUser() - request body was empty");
@@ -59,6 +64,7 @@ public class UserResource {
     }
 
     @PutMapping("/{userId}/increase-privileges")
+    @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserDTO> increasePrivileges(@PathVariable Long userId) throws Exception {
         User updatedUser = userService.increasePrivileges(userId);
         UserDTO updatedUserDTO = convertUserToDTO(updatedUser);
@@ -66,6 +72,7 @@ public class UserResource {
     }
 
     @PutMapping("/{userId}/change-password")
+    @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserDTO> changePassword(@PathVariable Long userId, @RequestBody ChangePasswordDTO changePasswordDTO) throws Exception {
         User updatedUser = userService.changePassword(userId, changePasswordDTO.getPassword(), changePasswordDTO.getPasswordRepeat());
         UserDTO updatedUserDTO = convertUserToDTO(updatedUser);
@@ -74,6 +81,7 @@ public class UserResource {
 
 
     @DeleteMapping("/{userId}/delete")
+    @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserDTO> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.OK);
