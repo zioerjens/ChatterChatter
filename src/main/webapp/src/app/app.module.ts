@@ -20,6 +20,7 @@ import {SubjectComponent} from './main/subject/subject.component';
 import {ChatComponent} from './main/chat/chat.component';
 import {ErrorInterceptor} from "./interceptor/error.interceptor";
 import {AboutComponent} from './main/about/about.component';
+import {AdminGuard} from "./guard/admin.guard";
 
 @NgModule({
   declarations: [

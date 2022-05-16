@@ -9,14 +9,11 @@ import {SubjectComponent} from "./main/subject/subject.component";
 import {ChatComponent} from "./main/chat/chat.component";
 import {UserCreateComponent} from "./main/user-management/user-create/user-create.component";
 import {AboutComponent} from "./main/about/about.component";
-import {AuthenticationGuard} from "./guard/authentication.guard";
-import {AdminGuard} from "./guard/admin.guard";
 
 const routes: Routes = [
   {path: 'about', component: AboutComponent},
   {path: 'chat', component: SubjectComponent},
   {path: 'chat/:id', component: ChatComponent},
-  {path: 'hello', component: HelloWorldComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'register', component: RegisterComponent},
