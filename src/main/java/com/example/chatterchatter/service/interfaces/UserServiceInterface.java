@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserServiceInterface {
 
-    List<User> findAllUsers();
+    List<User> findAllUsersExceptDeleted();
 
     Optional<User> findUserById(Long userId);
 

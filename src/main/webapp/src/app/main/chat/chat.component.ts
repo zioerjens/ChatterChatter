@@ -1,10 +1,20 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewChild
+} from '@angular/core';
 import {MessageDTO} from "../../model/MessageDTO";
 import {MessageService} from "../../service/message.service";
 import {SubjectDTO} from "../../model/SubjectDTO";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SubjectService} from "../../service/subject.service";
-import {interval, Observable} from "rxjs";
+import {interval, Observable, Subject, takeUntil} from "rxjs";
 import {dateToTime, isEmpty, isNotEmpty, mapById} from "../../../util/util";
 import {NgForm} from "@angular/forms";
 import {User} from "../../model/User";
@@ -15,18 +25,28 @@ import {AuthenticationService} from "../../service/authentication.service";
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class ChatComponent implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
+
+  @ViewChild('messageContainer') messageContainer!: ElementRef;
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateChatHeight();
+  }
 
   subject: SubjectDTO | undefined | null;
   messages: MessageDTO[] = [];
   private refresher: Observable<any> | undefined;
+  private bottomScrollLocked = true;
+  private onDestroy$ = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
     private messageService: MessageService,
     private subjectService: SubjectService,
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) {
   }
 
@@ -35,7 +55,9 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.subjectService.findById(params['id']).subscribe(res => {
           this.subject = res.body;
           this.loadMessages();
-          this.refresher = interval(1000);
+          this.refresher = interval(1000).pipe(
+            takeUntil(this.onDestroy$)
+          )
           this.refresher.subscribe(() => {
             this.loadMessages();
           })
@@ -45,9 +67,44 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
   }
 
-  // TODO @Sven needed?
-  ngOnDestroy() {
-    this.refresher = undefined;
+  ngAfterViewInit() {
+    this.updateChatHeight();
+    this.scrollToBottom();
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+  }
+
+  private updateChatHeight() {
+    const nav = window.getComputedStyle(document.getElementsByTagName("nav")[0]);
+    const navHeight = parseInt(nav.height) + parseInt(nav.marginBottom)
+    const h1 = window.getComputedStyle(document.getElementsByTagName("h1")[0]);
+    const h1Height = parseInt(h1.lineHeight) + parseInt(h1.marginTop) + parseInt(h1.marginBottom);
+    const form = window.getComputedStyle(document.getElementsByTagName("form")[0]);
+    const formHeight = parseInt(form.height) + parseInt(form.marginTop) + parseInt(form.marginBottom);
+
+    const desiredHeight = `${window.innerHeight
+    - navHeight
+    - h1Height
+    - formHeight}px`;
+
+    this.renderer.setStyle(this.messageContainer.nativeElement, "height", desiredHeight);
+  }
+
+  updateScrollLock(): void {
+    const element = this.messageContainer.nativeElement;
+    this.bottomScrollLocked = element.offsetHeight + element.scrollTop >= element.scrollHeight;
+  }
+
+  private scrollToBottom(): void {
+    if (this.bottomScrollLocked) {
+      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
+    }
   }
 
   private loadMessages() {

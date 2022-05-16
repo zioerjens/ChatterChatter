@@ -25,7 +25,7 @@ public class UserResource {
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> users = userService.findAllUsers().stream().map(this::convertUserToDTO).toList();
+        List<UserDTO> users = userService.findAllUsersExceptDeleted().stream().map(this::convertUserToDTO).toList();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 

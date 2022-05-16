@@ -2,6 +2,7 @@ package com.example.chatterchatter.service;
 
 import com.example.chatterchatter.model.domain.User;
 import com.example.chatterchatter.model.enums.RoleEnum;
+import com.example.chatterchatter.repository.MessageRepository;
 import com.example.chatterchatter.repository.UserRepository;
 import com.example.chatterchatter.service.interfaces.UserServiceInterface;
 import org.apache.commons.lang3.StringUtils;
@@ -24,9 +25,12 @@ public class UserService implements UserServiceInterface {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private MessageRepository messageRepository;
+
     @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
+    public List<User> findAllUsersExceptDeleted() {
+        return userRepository.findAll().stream().filter(u -> !u.getUsername().equals("deleted")).toList();
     }
 
     @Override
@@ -68,6 +72,11 @@ public class UserService implements UserServiceInterface {
 
     @Override
     public void deleteUser(Long userId) {
+        var deletedUser = userRepository.findByUsername("deleted").orElseThrow(
+                () -> new IllegalStateException("Deleted User could not be found.")
+        );
+        var messagesFromUserToBeDeleted = messageRepository.findAllBySenderId(userId);
+        messagesFromUserToBeDeleted.stream().forEach(m -> m.setSender(deletedUser));
         userRepository.deleteById(userId);
     }
 

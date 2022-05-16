@@ -1,16 +1,22 @@
-<h1>{{subject?.title}}</h1>
-<div class="message-holder">
+<div class="title-container">
+  <h1>{{subject?.title}}</h1>
+  <a href="/chat">
+    <button class="btn btn-primary">< Subjects</button>
+  </a>
+</div>
+<div class="message-holder" (scroll)="updateScrollLock()" #messageContainer>
   <div class="message" [class.own]="isLoggedIn(message.sender)" *ngFor="let message of messages">
     <p class="username" [textContent]="toMessageName(message.sender)"></p>
     <p class="content" [textContent]="message.content"></p>
     <p class="time" [textContent]="toMessageTime(message.time)"></p>
   </div>
 </div>
-<form class="list-group-item"
+<form id="message-form"
+      class="list-group-item"
       #messageForm="ngForm"
       (ngSubmit)="onCreateMessage(messageForm, messageForm.value)">
   <div class="input-group">
-    <input class="form-control" type="text" name="content" placeholder="Message" ngModel required/>
+    <input class="form-control" type="text" name="content" placeholder="Message" ngModel maxlength="250" required/>
     <div class="input-group-append">
       <button class="btn btn-outline-secondary"
               type="submit"
