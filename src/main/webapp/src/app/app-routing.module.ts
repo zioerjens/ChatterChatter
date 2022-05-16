@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {HelloWorldComponent} from "./main/hello-world/hello-world.component";
 import {LoginComponent} from "./main/login/login.component";
 import {RegisterComponent} from "./main/register/register.component";
 import {UserListComponent} from "./main/user-management/user-list/user-list.component";
@@ -10,6 +9,8 @@ import {SubjectComponent} from "./main/subject/subject.component";
 import {ChatComponent} from "./main/chat/chat.component";
 import {UserCreateComponent} from "./main/user-management/user-create/user-create.component";
 import {AboutComponent} from "./main/about/about.component";
+import {AuthenticationGuard} from "./guard/authentication.guard";
+import {AdminGuard} from "./guard/admin.guard";
 
 const routes: Routes = [
   {path: 'about', component: AboutComponent},
