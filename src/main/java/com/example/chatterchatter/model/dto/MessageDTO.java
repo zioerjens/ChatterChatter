@@ -27,8 +27,8 @@ public class MessageDTO {
     @NotNull
     Long subjectId;
 
-    @NotBlank(message = "The message content can't be empty")
-    @Size(max = 250, message = "The message is too long")
+    @NotBlank(message = "validation:_The message content can't be empty")
+    @Size(max = 250, message = "validation:_The message is too long")
     String content;
 
     public ChatMessage toDomain(User sender, Subject subject) {

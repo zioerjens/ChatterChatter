@@ -22,19 +22,19 @@ public class UserDTO implements Serializable {
     @NotNull
     private Long id;
 
-    @NotBlank(message = "The username can't be empty")
-    @Size(max = 100, message = "The username is too long")
+    @NotBlank(message = "validation:_The username can't be empty")
+    @Size(max = 100, message = "validation:_The username is too long")
     private String username;
 
-    @Size(max = 100, message = "The first name is too long")
+    @Size(max = 100, message = "validation:_The first name is too long")
     private String firstName;
 
-    @Size(max = 100, message = "The last name is too long")
+    @Size(max = 100, message = "validation:_The last name is too long")
     private String lastName;
 
     @Email
-    @NotBlank(message = "The email can't be empty")
-    @Size(max = 100, message = "The email is too long")
+    @NotBlank(message = "validation:_The email can't be empty")
+    @Size(max = 100, message = "validation:_The email is too long")
     private String email;
 
     @NotNull

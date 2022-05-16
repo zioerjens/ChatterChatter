@@ -17,23 +17,23 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class UserRegisterDTO implements Serializable {
 
-    @NotBlank(message = "The username can't be empty")
-    @Size(max = 100, message = "The username is too long")
+    @NotBlank(message = "validation:_The username can't be empty")
+    @Size(max = 100, message = "validation:_The username is too long")
     private String username;
 
     @Email
-    @NotBlank(message = "The email can't be empty")
-    @Size(max = 100, message = "The email is too long")
+    @NotBlank(message = "validation:_The email can't be empty")
+    @Size(max = 100, message = "validation:_The email is too long")
     private String email;
 
-    @Size(max = 100, message = "The first name is too long")
+    @Size(max = 100, message = "validation:_The first name is too long")
     private String firstName;
 
-    @Size(max = 100, message = "The last name is too long")
+    @Size(max = 100, message = "validation:_The last name is too long")
     private String lastName;
 
-    @NotBlank(message = "The password can't be empty")
-    @Size(max = 100, message = "The password is too long")
+    @NotBlank(message = "validation:_The password can't be empty")
+    @Size(max = 100, message = "validation:_The password is too long")
     private String password;
 
     public User toDomain() {

@@ -23,7 +23,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Username can't be empty")
+    @NotBlank(message = "validation:_Username can't be empty")
     private String username;
 
     private String firstname;
@@ -40,7 +40,7 @@ public class User {
     private Date joinDate;
 
     @Column(nullable = false)
-    @NotBlank(message = "Hashed password can't be empty")
+    @NotBlank(message = "validation:_Hashed password can't be empty")
     private String password;
 
     @Column(nullable = false)

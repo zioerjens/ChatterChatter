@@ -8,9 +8,9 @@ import java.io.Serializable;
 @Value
 public class ChangePasswordDTO implements Serializable {
 
-    @NotBlank(message = "password cannot be empty")
+    @NotBlank(message = "validation:_Password cannot be empty")
     String password;
 
-    @NotBlank(message = "passwordRepeat cannot be empty")
+    @NotBlank(message = "validation:_Repeated password cannot be empty")
     String passwordRepeat;
 }

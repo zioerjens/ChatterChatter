@@ -27,6 +27,9 @@ export class ErrorInterceptor implements HttpInterceptor {
               case 401:
                 this.router.navigateByUrl("/login"); // TODO @Jan might now work nicely with your JWT error handling?
                 break;
+              case 403:
+                this.notificationService.notify(NotificationTypeEnum.ERROR, 'Login failed.')
+                break;
               default:
                 this.handleHttpErrorResponse(error);
                 break;
@@ -55,8 +58,8 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   private handleValidationError(error: HttpErrorResponse, errorNotificationSent: boolean) {
     error.error.errors.forEach((e: any) => {
-        if (e.hasOwnProperty('defaultMessage')) {
-          this.notificationService.notify(NotificationTypeEnum.ERROR, e.defaultMessage);
+        if (e.hasOwnProperty('defaultMessage') && (<string>e.defaultMessage).includes('validation:_')) {
+          this.notificationService.notify(NotificationTypeEnum.ERROR, (<string>e.defaultMessage).replace('validation:_', ''));
           errorNotificationSent = true;
         }
       }
