@@ -19,6 +19,7 @@ import {UserManagementModule} from "./main/user-management/user-management.modul
 import {SubjectComponent} from './main/subject/subject.component';
 import {ChatComponent} from './main/chat/chat.component';
 import {ErrorInterceptor} from "./interceptor/error.interceptor";
+import {AboutComponent} from './main/about/about.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {ErrorInterceptor} from "./interceptor/error.interceptor";
     RegisterComponent,
     LogoutComponent,
     SubjectComponent,
-    ChatComponent
+    ChatComponent,
+    AboutComponent
   ],
   imports: [
     UserManagementModule,

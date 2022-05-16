@@ -9,8 +9,10 @@ import {UserEditComponent} from "./main/user-management/user-edit/user-edit.comp
 import {SubjectComponent} from "./main/subject/subject.component";
 import {ChatComponent} from "./main/chat/chat.component";
 import {UserCreateComponent} from "./main/user-management/user-create/user-create.component";
+import {AboutComponent} from "./main/about/about.component";
 
 const routes: Routes = [
+  {path: 'about', component: AboutComponent},
   {path: 'chat', component: SubjectComponent},
   {path: 'chat/:id', component: ChatComponent},
   {path: 'hello', component: HelloWorldComponent},
@@ -19,8 +21,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'users/management', component: UserListComponent},
   {path: 'users/create', component: UserCreateComponent},
-  {path: 'users/:id/edit', component:UserEditComponent},
-  {path:'', redirectTo:'/login', pathMatch:'full'}
+  {path: 'users/:id/edit', component: UserEditComponent},
+  {path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
 
 @NgModule({
