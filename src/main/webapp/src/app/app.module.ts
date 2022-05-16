@@ -19,6 +19,7 @@ import {UserManagementModule} from "./main/user-management/user-management.modul
 import {SubjectComponent} from './main/subject/subject.component';
 import {ChatComponent} from './main/chat/chat.component';
 import {ErrorInterceptor} from "./interceptor/error.interceptor";
+import {AdminGuard} from "./guard/admin.guard";
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import {ErrorInterceptor} from "./interceptor/error.interceptor";
   ],
   providers: [
     AuthenticationGuard,
+    AdminGuard,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],

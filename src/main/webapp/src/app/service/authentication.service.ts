@@ -5,6 +5,7 @@ import {UserLogin} from "../model/UserLogin";
 import {User} from "../model/User";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {UserRegistration} from "../model/UserRegistration";
+import {UserRoleEnum} from "../model/enum/user-role.enum";
 
 @Injectable({
   providedIn: 'root'
@@ -86,6 +87,10 @@ export class AuthenticationService {
 
   isLoggedInUser(user: User): boolean {
     return this.loggedInUsername === user.username;
+  }
+
+  hasRole(role: UserRoleEnum): boolean {
+    return this.getUserFromLocalStorage().role === role
   }
 
 }
