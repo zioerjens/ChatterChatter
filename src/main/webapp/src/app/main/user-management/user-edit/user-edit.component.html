@@ -1,7 +1,9 @@
-<section class="container card" *ngIf="!showLoading && user">
+<section class="container" *ngIf="!showLoading && user">
   <div class="row">
     <div class="col"><h3>Edit User #{{user?.id}} - {{user?.username}}</h3></div>
   </div>
+</section>
+<section class="container card" *ngIf="!showLoading && user">
   <form class="row" #userEditForm="ngForm" (ngSubmit)="onEdit(userEditForm.value)">
     <div class="col-md-6 col-sm-12 mb-3">
       <div class="input-group">
@@ -18,8 +20,7 @@
         <input type="email" class="form-control" name="email" placeholder="E-Mail" [(ngModel)]="user.email"
                ngModel #emailInput="ngModel" maxlength="100" required/>
       </div>
-      <span class="help-note text-danger"
-            *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</span>
+      <span class="help-note text-danger" *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</span>
     </div>
 
     <div class="col-md-6 col-sm-12 mb-3">
