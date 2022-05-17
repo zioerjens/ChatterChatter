@@ -1,37 +1,41 @@
-<section class="container mt-auto mb-auto">
-  <div class="d-flex justify-content-center h-50">
-    <div class="login-card">
-      <div class="d-flex justify-content-center">
-        <h3>ChatterChatter - Login</h3>
+<section class="container">
+  <div class="login-card h-50">
+    <div class="row">
+      <div class="col-12 mb-2">
+        <h3 class="text-center">ChatterChatter - Login</h3>
       </div>
-      <div class="d-flex justify-content-center form-container">
-        <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm.value)">
-          <div class="input-group mb-3">
-            <span class="input-group-text"><fa-icon [icon]="faUser"></fa-icon></span>
-            <input type="text" class="form-control" name="username" placeholder="Username"
-                   ngModel #usernameInput="ngModel" required/>
-          </div>
-          <span class="help-block color-danger" *ngIf="usernameInput.invalid && usernameInput.touched">Please enter an username</span>
-          <div class="input-group mb-3">
-            <span class="input-group-text"><fa-icon [icon]="faPassword"></fa-icon></span>
-            <input type="password" class="form-control" name="password" placeholder="Password"
-                   ngModel #passwordInput="ngModel" required/>
-          </div>
-          <span class="help-block color-danger" *ngIf="passwordInput.invalid && passwordInput.touched">Please enter a password</span>
-          <div class="input-group mb-3">
-            <button type="submit" [disabled]="loginForm.invalid || showLoading" class="btn btn-login"
-                    name="login-button">
-              <fa-icon *ngIf="showLoading" [icon]="faSpinner"></fa-icon>
-              <span *ngIf="showLoading">Loading...</span>
-              <span *ngIf="!showLoading">Login</span>
-            </button>
-          </div>
-        </form>
-      </div>
-      <div class="mt-4">
-        <div class="d-flex justify-content-center">
-          <span>Don't have an account ?<a class="ms-lg-2 sign-up-link " href="/register">Sign Up</a></span>
+    </div>
+    <form class="row" #loginForm="ngForm" (ngSubmit)="onLogin(loginForm.value)">
+      <div class="col-12 mb-3">
+        <div class="input-group">
+          <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faUser"></fa-icon></span>
+          <input type="text" class="form-control" name="username" placeholder="Username"
+                 ngModel #usernameInput="ngModel" required/>
         </div>
+        <span class="help-block color-danger" *ngIf="usernameInput.invalid && usernameInput.touched">Please enter an username</span>
+      </div>
+      <div class="col-12 mb-3">
+        <div class="input-group">
+          <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faPassword"></fa-icon></span>
+          <input type="password" class="form-control" name="password" placeholder="Password"
+                 ngModel #passwordInput="ngModel" required/>
+        </div>
+        <span class="help-block color-danger" *ngIf="passwordInput.invalid && passwordInput.touched">Please enter a password</span>
+      </div>
+      <div class="col-12">
+        <div class="input-group">
+          <button type="submit" [disabled]="loginForm.invalid || showLoading" class="btn w-100"
+                  name="login-button">
+            <fa-icon *ngIf="showLoading" [icon]="faSpinner"></fa-icon>
+            <span *ngIf="showLoading">Loading...</span>
+            <span *ngIf="!showLoading">Login</span>
+          </button>
+        </div>
+      </div>
+    </form>
+    <div class="row mt-1">
+      <div class="col-12 justify-content-center">
+        <span>Don't have an account?<a class="ms-lg-2 sign-up-link" href="/register">Sign Up</a></span>
       </div>
     </div>
   </div>

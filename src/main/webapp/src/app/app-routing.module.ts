@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'chat/:id', component: ChatComponent, canActivate: [AuthenticationGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent, canActivate: [AuthenticationGuard]},
-  {path: 'register', component: RegisterComponent, canActivate: [AuthenticationGuard]},
+  {path: 'register', component: RegisterComponent},
   {path: 'users/management', component: UserListComponent, canActivate: [AuthenticationGuard]},
   {path: 'users/create', component: UserCreateComponent, canActivate: [AuthenticationGuard, AdminGuard]},
   {path: 'users/:id/edit', component:UserEditComponent, canActivate: [AuthenticationGuard, AdminGuard]},
