@@ -16,17 +16,25 @@ p, span {
 }
 
 h1, h2, h3, h4, h5 {
-  color: white;
+  color: v.$light;
+}
+
+hr {
+  background: v.$background-card;
+}
+
+[class="container card"] {
+  padding: 10px;
 }
 
 .form-control {
-  background-color: rgba(255,255,255,.5);
+  background-color: rgba(255, 255, 255, .5);
   border: none;
   color: v.$background;
 }
 
 .form-control:focus {
-  background-color: rgba(255,255,255,.8);
+  background-color: rgba(255, 255, 255, .8);
 }
 
 .btn {
@@ -35,8 +43,58 @@ h1, h2, h3, h4, h5 {
   color: v.$light;
 }
 
-.btn > span{
+.btn > span {
   color: v.$light;
+}
+
+.btn-primary {
+  background: v.$primary;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  background: v.$primary;
+}
+
+.btn-primary:disabled {
+  opacity: 0.65;
+  background: v.$primary;
+}
+
+.btn-primary:focus {
+  opacity: 0.9;
+  background: v.$primary;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active {
+  opacity: 0.9;
+  background: v.$primary;
+  border-color: v.$primary;
+}
+
+.btn-secondary {
+  background: v.$secondary;
+}
+
+.btn-secondary:hover {
+  opacity: 0.9;
+  background: v.$secondary;
+}
+
+.btn-secondary:focus {
+  opacity: 0.9;
+  background: v.$secondary;
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active {
+  opacity: 0.9;
+  background: v.$secondary;
+  border-color: v.$secondary;
+}
+
+.btn-secondary:disabled {
+  opacity: 0.65;
+  background: v.$secondary;
 }
 
 .input-group-text {
@@ -47,4 +105,12 @@ h1, h2, h3, h4, h5 {
 
 .color-danger {
   color: v.$danger;
+}
+
+.card {
+  background: v.$background-card;
+}
+
+.chatter-bg-dark {
+  background-color: v.$background-card;
 }
