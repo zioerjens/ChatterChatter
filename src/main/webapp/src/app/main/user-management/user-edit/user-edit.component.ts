@@ -69,6 +69,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
     }
     this.subs.push(this.userService.increasePrivileges(this.user?.id).subscribe(res => {
       this.notificationService.notify(NotificationTypeEnum.SUCCESS, 'The user has now ADMIN privileges');
+      this.ngOnInit();
     }));
   }
 
@@ -84,6 +85,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
     this.subs.push(this.userService.changeUserPassword(this.user.id, password.toString(), passwordRepeat.toString()).subscribe(res => {
       this.notificationService.notify(NotificationTypeEnum.SUCCESS, 'Changed the password successfully');
+      this.router.navigateByUrl(`/users/management`);
     }));
   }
 
