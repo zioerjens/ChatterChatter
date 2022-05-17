@@ -4,6 +4,7 @@ import {SubjectService} from "../../service/subject.service";
 import {faPlus, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {interval, Observable} from "rxjs";
 import {isEmpty, isNotEmpty, mapById} from "../../../util/util";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-chats',
@@ -13,6 +14,7 @@ import {isEmpty, isNotEmpty, mapById} from "../../../util/util";
 export class SubjectComponent implements OnInit, OnDestroy {
 
   constructor(
+    private router:Router,
     private subjectService: SubjectService,
   ) {
   }
@@ -69,5 +71,12 @@ export class SubjectComponent implements OnInit, OnDestroy {
       this.subjects.push(result);
       this.onCloseCreateSubjectView();
     });
+  }
+
+  navigateToChat(subjectId: number | undefined) {
+    if (isEmpty(subjectId)) {
+      return;
+    }
+    this.router.navigateByUrl(`/chats/${subjectId}`);
   }
 }

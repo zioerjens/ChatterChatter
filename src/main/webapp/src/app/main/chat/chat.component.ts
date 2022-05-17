@@ -19,6 +19,7 @@ import {dateToTime, isEmpty, isNotEmpty, mapById} from "../../../util/util";
 import {NgForm} from "@angular/forms";
 import {User} from "../../model/User";
 import {AuthenticationService} from "../../service/authentication.service";
+import {faChevronLeft, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-chat-component',
@@ -36,6 +37,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit, AfterVie
 
   subject: SubjectDTO | undefined | null;
   messages: MessageDTO[] = [];
+
+  faChevronLeft = faChevronLeft;
+  faPaperPlane = faPaperPlane;
+
   private refresher: Observable<any> | undefined;
   private bottomScrollLocked = true;
   private onDestroy$ = new Subject<void>();
@@ -83,7 +88,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit, AfterVie
   private updateChatHeight() {
     const nav = window.getComputedStyle(document.getElementsByTagName("nav")[0]);
     const navHeight = parseInt(nav.height) + parseInt(nav.marginBottom)
-    const h1 = window.getComputedStyle(document.getElementsByTagName("h1")[0]);
+    const h1 = window.getComputedStyle(document.getElementsByTagName("h3")[0]);
     const h1Height = parseInt(h1.lineHeight) + parseInt(h1.marginTop) + parseInt(h1.marginBottom);
     const form = window.getComputedStyle(document.getElementsByTagName("form")[0]);
     const formHeight = parseInt(form.height) + parseInt(form.marginTop) + parseInt(form.marginBottom);

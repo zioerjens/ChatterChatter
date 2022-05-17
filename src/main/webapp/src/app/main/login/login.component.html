@@ -27,7 +27,7 @@
           <button type="submit" [disabled]="loginForm.invalid || showLoading" class="btn w-100"
                   name="login-button">
             <fa-icon *ngIf="showLoading" [icon]="faSpinner"></fa-icon>
-            <span *ngIf="showLoading">Loading...</span>
+            <span *ngIf="showLoading"> Loading...</span>
             <span *ngIf="!showLoading">Login</span>
           </button>
         </div>

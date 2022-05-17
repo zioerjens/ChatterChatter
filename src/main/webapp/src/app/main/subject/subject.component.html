@@ -1,39 +1,43 @@
-<main class="list-group">
-  <h1>Chats</h1>
-  <h2>Select a chat room to join</h2>
-  <div class="subject-container" *ngFor="let subject of subjects">
-    <a class="list-group-item list-group-item-action"
-       [textContent]="subject.title"
-       [href]="'chat/' + subject.id">
-    </a>
-    <button class="btn btn-outline-secondary" (click)="onDeleteSubject(subject.id)">
-      <fa-icon [icon]="faTrash"></fa-icon>
-    </button>
-  </div>
-  <ng-container *ngIf="createSubjectViewVisible">
-    <form class="list-group-item"
-          #subjectForm="ngForm"
-          (ngSubmit)="onCreateSubject(subjectForm.value)">
-      <div class="input-group">
-        <input class="form-control" type="text" name="title" placeholder="Title" maxlength="100" ngModel required/>
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary"
-                  type="submit"
-                  [disabled]="subjectForm.invalid"
-                  name="create-subject-button">
-            <span>Create Subject</span>
-          </button>
-          <button class="btn btn-outline-secondary"
-                  type="button"
-                  (click)="onCloseCreateSubjectView()">
-            <span>Cancel</span>
-          </button>
+<main class="container">
+  <h3>Chats</h3>
+  <p>Select a chat room to join</p>
+  <section class="list-group">
+    <div class="w-100 list-group-item list-group-item-action"
+         *ngFor="let subject of subjects">
+      <a class="d-flex justify-content-between text-decoration-none"
+         [href]="'chat/'+subject.id"
+           (click)="navigateToChat(subject.id)">
+        <h5> {{subject.title}}</h5>
+        <button class="btn btn-secondary" (click)="onDeleteSubject(subject.id)">
+          <fa-icon [icon]="faTrash"></fa-icon>
+        </button>
+      </a>
+    </div>
+    <ng-container *ngIf="createSubjectViewVisible">
+      <form class="list-group-item" #subjectForm="ngForm" (ngSubmit)="onCreateSubject(subjectForm.value)">
+        <div class="input-group">
+          <input class="form-control" type="text" name="title" placeholder="Title" maxlength="100" ngModel required/>
+          <div class="input-group-append">
+            <button class="btn btn-secondary"
+                    type="button"
+                    (click)="onCloseCreateSubjectView()">
+              <span>Cancel</span>
+            </button>
+            <button class="btn btn-primary"
+                    type="submit"
+                    [disabled]="subjectForm.invalid"
+                    name="create-subject-button">
+              <span><fa-icon [icon]="faPlus"></fa-icon> Add</span>
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
-  </ng-container>
-  <button class="list-group-item list-group-item-action active"
-          (click)="this.onOpenCreateSubjectView()">
-    <fa-icon [icon]="faPlus"></fa-icon>
-  </button>
+      </form>
+    </ng-container>
+    <div class="list-group-item list-group-item-action" *ngIf="!createSubjectViewVisible">
+      <button class="btn btn-primary w-100"
+              (click)="this.onOpenCreateSubjectView()">
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </button>
+    </div>
+  </section>
 </main>

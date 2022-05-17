@@ -59,7 +59,7 @@
           <button type="submit" [disabled]="registrationForm.invalid || showLoading" class="btn w-100"
                   name="register-button">
             <fa-icon *ngIf="showLoading" [icon]="faSpinner"></fa-icon>
-            <span *ngIf="showLoading">Loading...</span>
+            <span *ngIf="showLoading"> Loading...</span>
             <span *ngIf="!showLoading">Register</span>
           </button>
         </div>

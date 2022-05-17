@@ -3,7 +3,6 @@
 @import 'node_modules/angular-notifier/styles.scss';
 @import '~bootstrap/dist/css/bootstrap.css';
 
-
 body {
   width: 100%;
   margin: 0 auto;
@@ -19,12 +18,27 @@ h1, h2, h3, h4, h5 {
   color: v.$light;
 }
 
+a, a:hover, a:focus, a:active {
+  color: v.$primary
+}
+
 hr {
   background: v.$background-card;
 }
 
 [class="container card"] {
   padding: 10px;
+}
+
+.list-group-item {
+  background-color: v.$background-card;
+  color: v.$light;
+}
+
+.list-group-item:hover {
+  opacity: 0.9;
+  background-color: v.$background-card;
+  color: v.$light;
 }
 
 .form-control {
@@ -48,27 +62,26 @@ hr {
 }
 
 .btn-primary {
+  color: v.$light;
   background: v.$primary;
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
-  background: v.$primary;
+  background: rgba(v.$primary, 0.9);
 }
 
 .btn-primary:disabled {
-  opacity: 0.65;
-  background: v.$primary;
+  color: v.$light;
+  background: rgba(v.$primary, 0.65);
 }
 
 .btn-primary:focus {
-  opacity: 0.9;
-  background: v.$primary;
+  background: rgba(v.$primary, 0.9);
+  color: v.$light;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active {
-  opacity: 0.9;
-  background: v.$primary;
+  background: rgba(v.$primary, 0.9);
   border-color: v.$primary;
 }
 
