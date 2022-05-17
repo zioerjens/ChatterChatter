@@ -3,7 +3,7 @@
     <div class="col"><h3>User create</h3></div>
   </div>
   <form class="row" #createUserForm="ngForm" (ngSubmit)="onCreate(createUserForm.value)">
-    <div class="col-6 mb-3">
+    <div class="col-md-6 col-sm-12 mb-3">
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faUser"></fa-icon></span>
         <input type="text" class="form-control" name="username" placeholder="Username"
@@ -11,7 +11,7 @@
       </div>
       <span class="help-note text-danger" *ngIf="usernameInput.invalid && usernameInput.touched">Please enter an username</span>
     </div>
-    <div class="col-6 mb-3">
+    <div class="col-md-6 col-sm-12 mb-3">
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faEmail"></fa-icon></span>
         <input type="email" class="form-control" name="email" placeholder="E-Mail"
@@ -20,19 +20,19 @@
       <span class="help-note text-danger"
             *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</span>
     </div>
-    <div class="col-6 mb-3">
+    <div class="col-md-6 col-sm-12 mb-3">
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faUser"></fa-icon></span>
         <input type="text" class="form-control" name="firstName" placeholder="Firstname" maxlength="100" ngModel/>
       </div>
     </div>
-    <div class="col-6 mb-3">
+    <div class="col-md-6 col-sm-12 mb-3">
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faUser"></fa-icon></span>
         <input type="text" class="form-control" name="lastName" placeholder="Lastname" maxlength="100" ngModel/>
       </div>
     </div>
-    <div class="col-6 mb-3">
+    <div class="col-md-6 col-sm-12 mb-3">
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faPassword"></fa-icon></span>
         <input type="password" class="form-control" name="password" placeholder="Password"
@@ -41,7 +41,7 @@
       <span class="help-note text-danger"
             *ngIf="passwordInput.invalid && passwordInput.touched">Please enter a password</span>
     </div>
-    <div class="col-6 mb-3">
+    <div class="col-md-6 col-sm-12 mb-3">
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faPassword"></fa-icon></span>
         <input type="password" class="form-control" name="passwordRepeat" placeholder="Repeat password"
