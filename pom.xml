@@ -123,25 +123,76 @@
                         <phase>generate-resources</phase>
 
                         <configuration>
-                            <arguments>install --prefix ./src/main/webapp</arguments>
+                            <arguments>install</arguments>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>npm run-script build</id>
+                        <id>prod</id>
                         <goals>
                             <goal>npm</goal>
                         </goals>
-                        <phase>prepare-package</phase>
                         <configuration>
-                            <arguments>run start --prefix ./src/main/webapp</arguments>
+                            <arguments>run-script build</arguments>
                         </configuration>
+                        <phase>generate-resources</phase>
+                    </execution>
+                    <execution>
+                        <id>serve-app</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run-script build</arguments>
+                        </configuration>
+                        <phase>generate-resources</phase>
                     </execution>
                 </executions>
                 <configuration>
                     <nodeVersion>v16.15.0</nodeVersion>
                     <npmVersion>8.10.0</npmVersion>
+                    <workingDirectory>src/main/webapp/</workingDirectory>
+                    <installDirectory>target</installDirectory>
                 </configuration>
             </plugin>
+            <!--<plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/classes/resources/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src/main/webapp/dist/chatter-chatter</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
+            <!--<plugin>
+                <groupId>com.github.ug-dbg</groupId>
+                <artifactId>mvn-npm-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec-all</goal>
+                        </goals>
+                        <configuration>
+                            <logLevel>FINEST</logLevel>
+                            <workingDir>${project.basedir}/src/main/webapp</workingDir>
+
+                            <args>run build</args>
+                            <args>run start</args>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
