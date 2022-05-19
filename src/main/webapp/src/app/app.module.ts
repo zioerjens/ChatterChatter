@@ -21,6 +21,7 @@ import {ChatComponent} from './main/chat/chat.component';
 import {ErrorInterceptor} from "./interceptor/error.interceptor";
 import {AboutComponent} from './main/about/about.component';
 import {AdminGuard} from "./guard/admin.guard";
+import {PageNotFoundComponent} from './main/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {AdminGuard} from "./guard/admin.guard";
     LogoutComponent,
     SubjectComponent,
     ChatComponent,
-    AboutComponent
+    AboutComponent,
+    PageNotFoundComponent
   ],
   imports: [
     UserManagementModule,

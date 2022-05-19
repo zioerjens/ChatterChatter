@@ -9,18 +9,21 @@ import {SubjectComponent} from "./main/subject/subject.component";
 import {ChatComponent} from "./main/chat/chat.component";
 import {UserCreateComponent} from "./main/user-management/user-create/user-create.component";
 import {AboutComponent} from "./main/about/about.component";
+import {PageNotFoundComponent} from "./main/page-not-found/page-not-found.component";
 
 const routes: Routes = [
+  {path: '404', component: PageNotFoundComponent},
   {path: 'about', component: AboutComponent},
   {path: 'chat', component: SubjectComponent},
   {path: 'chat/:id', component: ChatComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'users', component: UserListComponent},
   {path: 'users/management', component: UserListComponent},
   {path: 'users/create', component: UserCreateComponent},
   {path: 'users/:id/edit', component: UserEditComponent},
-  {path: '', redirectTo: '/login', pathMatch: 'full'}
+  {path: '**', pathMatch: 'full', component: PageNotFoundComponent},
 ];
 
 @NgModule({

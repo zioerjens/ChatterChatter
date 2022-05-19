@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SubjectDTO} from "../../model/SubjectDTO";
 import {SubjectService} from "../../service/subject.service";
 import {faPlus, faTrash} from '@fortawesome/free-solid-svg-icons';
-import {interval, Observable} from "rxjs";
+import {interval, Observable, Subject, takeUntil} from "rxjs";
 import {isEmpty, isNotEmpty, mapById} from "../../../util/util";
 import {Router} from "@angular/router";
 
@@ -14,7 +14,7 @@ import {Router} from "@angular/router";
 export class SubjectComponent implements OnInit, OnDestroy {
 
   constructor(
-    private router:Router,
+    private router: Router,
     private subjectService: SubjectService,
   ) {
   }
@@ -24,17 +24,20 @@ export class SubjectComponent implements OnInit, OnDestroy {
   faPlus = faPlus;
   faTrash = faTrash;
   private refresher: Observable<any> | undefined;
+  private onDestroy$ = new Subject<void>();
 
   ngOnInit(): void {
     this.loadSubjects();
-    this.refresher = interval(1000);
+    this.refresher = interval(1000).pipe(
+      takeUntil(this.onDestroy$)
+    )
     this.refresher.subscribe(() => {
       this.loadSubjects();
     })
   }
 
   ngOnDestroy() {
-    this.refresher = undefined;
+    this.onDestroy$.next();
   }
 
   loadSubjects() {
@@ -77,6 +80,6 @@ export class SubjectComponent implements OnInit, OnDestroy {
     if (isEmpty(subjectId)) {
       return;
     }
-    this.router.navigateByUrl(`/chats/${subjectId}`);
+    this.router.navigateByUrl(`/chat/${subjectId}`);
   }
 }
