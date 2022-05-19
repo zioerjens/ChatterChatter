@@ -8,19 +8,19 @@ import {UserEditComponent} from "./main/user-management/user-edit/user-edit.comp
 import {SubjectComponent} from "./main/subject/subject.component";
 import {ChatComponent} from "./main/chat/chat.component";
 import {UserCreateComponent} from "./main/user-management/user-create/user-create.component";
-import {AuthenticationGuard} from "./guard/authentication.guard";
-import {AdminGuard} from "./guard/admin.guard";
+import {AboutComponent} from "./main/about/about.component";
 
 const routes: Routes = [
-  {path: 'chat', component: SubjectComponent, canActivate: [AuthenticationGuard]},
-  {path: 'chat/:id', component: ChatComponent, canActivate: [AuthenticationGuard]},
+  {path: 'about', component: AboutComponent},
+  {path: 'chat', component: SubjectComponent},
+  {path: 'chat/:id', component: ChatComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'logout', component: LogoutComponent, canActivate: [AuthenticationGuard]},
+  {path: 'logout', component: LogoutComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'users/management', component: UserListComponent, canActivate: [AuthenticationGuard]},
-  {path: 'users/create', component: UserCreateComponent, canActivate: [AuthenticationGuard, AdminGuard]},
-  {path: 'users/:id/edit', component:UserEditComponent, canActivate: [AuthenticationGuard, AdminGuard]},
-  {path:'', redirectTo:'/login', pathMatch:'full'}
+  {path: 'users/management', component: UserListComponent},
+  {path: 'users/create', component: UserCreateComponent},
+  {path: 'users/:id/edit', component: UserEditComponent},
+  {path: '', redirectTo: '/login', pathMatch: 'full'}
 ];
 
 @NgModule({
