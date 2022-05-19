@@ -1,0 +1,17 @@
+@use 'src/app/main/variables' as v;
+
+main {
+  background-color: v.$background-card;
+}
+
+.motivation {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: lighter;
+  color: v.$light;
+  margin-top: 2rem;
+}
+
+hr {
+  background: v.$background;
+}

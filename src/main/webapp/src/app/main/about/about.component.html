@@ -1,20 +1,42 @@
-<h1>About</h1>
-<hr>
-<h2>ChatterChatter as Discord alternative</h2>
-<p>The Application ChatterChatter is a chat application with chat rooms which enable people from all over the world to
-  exchange with each other.</p>
+<main class="m-3 rounded p-3">
+  <h1>About</h1>
 
-<hr>
-<h2>Entities</h2>
-<p>There are three entities implemented: users, chat rooms and messages.</p>
+  <h2>ChatterChatter as Discord alternative</h2>
+  <p>The Application ChatterChatter is a chat application which enables people from all over the world to
+    exchange with each other. You can meet anyone and communicate about anything. Just head over to the "Chat Rooms"
+    page after logging in and create a new room or join an existing one.</p>
+  <hr>
+  <h2>Entities and Relations</h2>
+  <p>There are three entities implemented: </p>
+  <ul>
+    <li>users (read, create, update, delete)</li>
+    <li>chat rooms / subjects (read, create, delete)</li>
+    <li>messages (read, create, delete)</li>
+  </ul>
+  <p>With two non-trivial relations: </p>
+  <ul>
+    <li>user to message (1:n)</li>
+    <li>message to subject (n:1)</li>
+  </ul>
+  <hr>
+  <h2>Validation</h2>
+  <p>All input fields are validated in the frontend and the backend too.</p>
+  <hr>
+  <h2>Authentication</h2>
+  <p>The creators of this website have implemented a working JWT-authentication to ensure maximum safety to all
+    users.</p>
+  <hr>
+  <h2>Rich Client</h2>
+  <p>The website ChatterChatter consists of two separate applications which are running simultaneously. The angular app
+    provides the HTML, CSS and JavaScript while the backend, a spring boot application, takes care of the user
+    management and persistence.</p>
+  <hr>
+  <h2>Responsive</h2>
+  <p>ChatterChatter is a mobile friendly application and can be used on any device format.</p>
+  <hr>
+  <h2>Team</h2>
+  <p>Our team consists of Jan Zimmermann and Sven Ziörjen. We are happy to provide this awesome website for you. Have
+    fun exploring ChatterChatter and see you soon, somewhere in one of our chat rooms!</p>
+</main>
 
-<hr>
-<h2>The team members:</h2>
-<ul>
-  <li>
-    Jan Zimmermann
-  </li>
-  <li>
-    Sven Ziörjen
-  </li>
-</ul>
+<p class="motivation">Everything is possible with ChatterChatter!</p>
