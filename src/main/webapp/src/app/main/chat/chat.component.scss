@@ -13,6 +13,11 @@ h3 {
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   overflow-y: scroll;
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 }
 
 .message {
@@ -49,6 +54,10 @@ h3 {
     align-self: end;
     background-color: v.$primary;
     color: v.$primary-darker;
+  }
+
+  &.deleted {
+    font-style: italic;
   }
 }
 

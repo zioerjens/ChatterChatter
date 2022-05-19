@@ -7,7 +7,8 @@
     <h3 class="mt-1">{{subject?.title}}</h3>
   </div>
   <div class="message-holder" (scroll)="updateScrollLock()" #messageContainer>
-    <div class="message" [class.own]="isLoggedIn(message.sender)" *ngFor="let message of messages">
+    <div class="message" [class.own]="isLoggedIn(message.sender)" [class.deleted]="isDeletedUser(message.sender)"
+         *ngFor="let message of messages">
       <p class="username" [textContent]="toMessageName(message.sender)"></p>
       <p class="content" [textContent]="message.content"></p>
       <p class="time" [textContent]="toMessageTime(message.time)"></p>

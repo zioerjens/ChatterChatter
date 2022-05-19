@@ -163,4 +163,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit, AfterVie
     }
     return this.authService.isLoggedInUser(sender!);
   }
+
+  isDeletedUser(user: User | undefined) {
+    return user?.username === 'deleted';
+  }
 }
