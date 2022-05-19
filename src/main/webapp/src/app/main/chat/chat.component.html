@@ -1,9 +1,10 @@
 <div class="container">
-  <div class="row">
-    <a [href]="'/chat'" class="text-decoration-none ml-3 mt-1 mr-2">
-      <fa-icon [icon]="faChevronLeft"></fa-icon> Back
+  <div class="row flex-nowrap">
+    <a [href]="'/chat'" class="text-decoration-none ml-3 mt-1 mr-4">
+      <fa-icon [icon]="faChevronLeft"></fa-icon>
+      Back
     </a>
-    <h3>{{subject?.title}}</h3>
+    <h3 class="mt-1">{{subject?.title}}</h3>
   </div>
   <div class="message-holder" (scroll)="updateScrollLock()" #messageContainer>
     <div class="message" [class.own]="isLoggedIn(message.sender)" *ngFor="let message of messages">

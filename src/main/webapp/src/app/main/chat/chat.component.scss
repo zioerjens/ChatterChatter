@@ -1,19 +1,7 @@
 @use 'src/app/main/variables' as v;
 
-.title-container {
-  display: flex;
-  width: 100%;
-  column-gap: 1rem;
-
-  h3 {
-    flex-grow: 1;
-    overflow: hidden;
-  }
-
-  a, button {
-    flex-grow: 0;
-    white-space: nowrap;
-  }
+h3 {
+  font-size: 1.4em;
 }
 
 .message-holder {
@@ -44,26 +32,36 @@
 
   .username {
     font-size: 0.9rem;
-    color: v.$background;
+    color: inherit;
   }
 
   .content {
-    color: v.$light;
+    color: inherit;
   }
 
   .time {
     text-align: end;
     font-size: 0.8rem;
-    color: v.$light;
+    color: inherit;
   }
 
   &.own {
     align-self: end;
     background-color: v.$primary;
-    color: v.$light
+    color: v.$primary-darker;
   }
 }
 
 #message-form {
   margin-bottom: 20px;
+}
+
+.row {
+  height: 50px;
+  overflow: hidden;
+
+  a, h3 {
+    flex-grow: 0;
+    white-space: nowrap;
+  }
 }

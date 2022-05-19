@@ -66,6 +66,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit, AfterVie
           this.refresher.subscribe(() => {
             this.loadMessages();
           })
+          this.updateChatHeight();
         },
         () => this.router.navigateByUrl('chat')
       )
@@ -87,16 +88,21 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit, AfterVie
 
   private updateChatHeight() {
     const nav = window.getComputedStyle(document.getElementsByTagName("nav")[0]);
-    const navHeight = parseInt(nav.height) + parseInt(nav.marginBottom)
-    const h1 = window.getComputedStyle(document.getElementsByTagName("h3")[0]);
-    const h1Height = parseInt(h1.lineHeight) + parseInt(h1.marginTop) + parseInt(h1.marginBottom);
+    const navHeight = parseInt(nav.height) + parseInt(nav.marginBottom) + parseInt(nav.marginTop);
+    const row = window.getComputedStyle(document.getElementsByClassName("row")[0]);
+    const rowHeight = parseInt(row.height) + parseInt(row.marginTop) + parseInt(row.marginBottom);
     const form = window.getComputedStyle(document.getElementsByTagName("form")[0]);
     const formHeight = parseInt(form.height) + parseInt(form.marginTop) + parseInt(form.marginBottom);
 
     const desiredHeight = `${window.innerHeight
     - navHeight
-    - h1Height
+    - rowHeight
     - formHeight}px`;
+
+    console.log(navHeight)
+    console.log(rowHeight)
+    console.log(formHeight)
+    console.log(desiredHeight)
 
     this.renderer.setStyle(this.messageContainer.nativeElement, "height", desiredHeight);
   }

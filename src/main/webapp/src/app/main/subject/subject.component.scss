@@ -7,5 +7,15 @@
 }
 
 .list-group-item {
-  //overflow: hidden;
+  overflow: hidden;
+}
+
+span {
+  height: min-content;
+  color: v.$light;
+  font-weight: bold;
+}
+
+a {
+  align-items: center;
 }

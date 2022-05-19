@@ -6,8 +6,8 @@
          *ngFor="let subject of subjects">
       <a class="d-flex justify-content-between text-decoration-none"
          [href]="'chat/'+subject.id"
-           (click)="navigateToChat(subject.id)">
-        <h5> {{subject.title}}</h5>
+         (click)="navigateToChat(subject.id)">
+        <span> {{subject.title}}</span>
         <button class="btn btn-secondary" (click)="onDeleteSubject(subject.id)">
           <fa-icon [icon]="faTrash"></fa-icon>
         </button>
