@@ -53,10 +53,10 @@ public class AuthenticationService implements AuthenticationServiceInterface {
     public User login(String username, String password) throws Exception {
         User user = userService.findUserByUsername(username);
         if (user == null || user.getPassword() == null) {
-            throw new AuthenticationCredentialsNotFoundException("User with given credentials not found.");
+            throw new AuthenticationCredentialsNotFoundException("validation:_User with given credentials not found.");
         }
         if (!verifyPassword(password, user.getPassword())) {
-            throw new AuthenticationCredentialsNotFoundException("Password is not correct.");
+            throw new AuthenticationCredentialsNotFoundException("validation:_Password is not correct.");
         }
         authenticate(username, password);
 

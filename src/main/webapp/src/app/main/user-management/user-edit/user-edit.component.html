@@ -18,9 +18,10 @@
       <div class="input-group">
         <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faEmail"></fa-icon></span>
         <input type="email" class="form-control" name="email" placeholder="E-Mail" [(ngModel)]="user.email"
-               ngModel #emailInput="ngModel" maxlength="100" required/>
+               ngModel #emailInput="ngModel" maxlength="100" required email/>
       </div>
-      <span class="help-note text-danger" *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</span>
+      <span class="help-note text-danger"
+            *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</span>
     </div>
 
     <div class="col-md-6 col-sm-12 mb-3">

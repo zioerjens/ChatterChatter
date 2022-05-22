@@ -21,7 +21,7 @@ public class UserRegisterDTO implements Serializable {
     @Size(max = 100, message = "validation:_The username is too long")
     private String username;
 
-    @Email
+    @Email(message = "validation:_Not a valid email")
     @NotBlank(message = "validation:_The email can't be empty")
     @Size(max = 100, message = "validation:_The email is too long")
     private String email;

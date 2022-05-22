@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
 
@@ -23,15 +20,18 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "validation:_Username can't be empty")
+    @NotBlank
+    @Size(max = 100)
     private String username;
 
+    @Size(max = 100)
     private String firstname;
 
+    @Size(max = 100)
     private String lastname;
 
     @Column(nullable = false, unique = true)
-    @NotEmpty
+    @NotBlank
     @Email
     private String email;
 
@@ -40,7 +40,7 @@ public class User {
     private Date joinDate;
 
     @Column(nullable = false)
-    @NotBlank(message = "validation:_Hashed password can't be empty")
+    @NotBlank
     private String password;
 
     @Column(nullable = false)

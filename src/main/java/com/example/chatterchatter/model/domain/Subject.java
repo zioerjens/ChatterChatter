@@ -20,7 +20,7 @@ public class Subject {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "validation:_Subject title can't be empty")
+    @NotBlank
     String title;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)

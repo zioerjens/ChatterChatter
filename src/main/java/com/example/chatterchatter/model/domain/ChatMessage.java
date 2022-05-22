@@ -22,11 +22,11 @@ public class ChatMessage {
     private Long id;
 
     @ManyToOne
-    @NotNull(message = "validation:_Message has to belong to a user")
+    @NotNull
     User sender;
 
     @Column(nullable = false)
-    @NotBlank(message = "validation:_Message content can't be null")
+    @NotBlank
     String content;
 
     @Column(nullable = false)
@@ -34,7 +34,7 @@ public class ChatMessage {
     LocalDateTime time;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @NotNull(message = "validation:_Message has to belong to a subject")
+    @NotNull
     Subject subject;
 
     @PrePersist

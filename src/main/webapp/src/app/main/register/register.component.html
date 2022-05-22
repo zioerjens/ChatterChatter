@@ -12,7 +12,7 @@
           <input type="text" class="form-control" name="username" placeholder="Username"
                  ngModel #usernameInput="ngModel" required/>
         </div>
-        <span class="help-block color-danger" *ngIf="usernameInput.invalid && usernameInput.touched">Please enter an username</span>
+        <span class="help-block color-danger" *ngIf="usernameInput.invalid && usernameInput.touched">Please enter a username</span>
       </div>
       <div class="col-12 mb-3">
         <div class="input-group">
@@ -33,7 +33,7 @@
         <div class="input-group">
           <span class="input-group-prepend"><fa-icon class="input-group-text" [icon]="faEmail"></fa-icon></span>
           <input type="email" class="form-control" name="email" placeholder="E-Mail"
-                 ngModel #emailInput="ngModel" required/>
+                 ngModel #emailInput="ngModel" required email/>
         </div>
         <span class="help-block color-danger" *ngIf="emailInput.invalid && emailInput.touched">Please enter a valid email</span>
       </div>

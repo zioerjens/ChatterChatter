@@ -2,12 +2,10 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {faKey, faSpinner, faUser} from "@fortawesome/free-solid-svg-icons";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../service/authentication.service";
-import {NotificationService} from "../../utils/notification/notification.service";
 import {UserLogin} from "../../model/UserLogin";
 import {Subscription} from "rxjs";
-import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import {HttpResponse} from "@angular/common/http";
 import {User} from "../../model/User";
-import {NotificationTypeEnum} from "../../model/enum/notification-type.enum";
 import {HeaderTypeEnum} from "../../model/enum/header-type.enum";
 
 @Component({
@@ -24,8 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   constructor(private router: Router,
-              private authenticationService: AuthenticationService,
-              private notificationService: NotificationService) {
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
@@ -51,24 +48,14 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.authenticationService.addTokenToLocalStorage(token);
           this.authenticationService.addUserToLocalStorage(res.body);
 
-          if(this.authenticationService.isTokenValid()){
-            this.router.navigateByUrl('/users/management')
+          if (this.authenticationService.isTokenValid()) {
+            this.router.navigateByUrl('/chat')
           }
           this.showLoading = false;
         },
-        (errorRes: HttpErrorResponse) => {
-          console.log(errorRes);
-          this.sendErrorNotification(errorRes.message);
+        () => {
           this.showLoading = false;
         })
     )
-  }
-
-  private sendErrorNotification(message: string) {
-    if (message) {
-      this.notificationService.notify(NotificationTypeEnum.ERROR, message);
-    } else {
-      this.notificationService.notify(NotificationTypeEnum.ERROR, 'An unexpected error occurred.');
-    }
   }
 }
