@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationResource {
@@ -26,7 +28,7 @@ public class AuthenticationResource {
     private JwtTokenService jwtTokenService;
 
     @PostMapping("/login")
-    public ResponseEntity<UserDTO> login(@RequestBody UserLoginDTO loginDTO) throws Exception {
+    public ResponseEntity<UserDTO> login(@Valid @RequestBody UserLoginDTO loginDTO) throws Exception {
         User user = authenticationService.login(loginDTO.getUsername(), loginDTO.getPassword());
         UserDTO dto = convertUserToDTO(user);
         HttpHeaders jwtHeader = jwtTokenService.getJwtHeader(user);
@@ -34,7 +36,7 @@ public class AuthenticationResource {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> register(@RequestBody UserRegisterDTO userDTO) throws Exception {
+    public ResponseEntity<UserDTO> register(@Valid @RequestBody UserRegisterDTO userDTO) throws Exception {
         User user = authenticationService.register(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getUsername(), userDTO.getEmail(), userDTO.getPassword());
         UserDTO dto = convertUserToDTO(user);
         return new ResponseEntity<>(dto, HttpStatus.OK);

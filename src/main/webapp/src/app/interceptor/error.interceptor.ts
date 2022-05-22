@@ -11,8 +11,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private notificationService: NotificationService,
-    private router: Router
-  ) {
+    private router: Router) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -25,10 +24,14 @@ export class ErrorInterceptor implements HttpInterceptor {
           } else {
             switch (error.status) {
               case 401:
-                this.router.navigateByUrl("/login");
+                this.handleHttpErrorResponse(error);
                 break;
               case 403:
-                this.notificationService.notify(NotificationTypeEnum.ERROR, 'Login failed.')
+                if (this.router.url === '/login') {
+                  this.notificationService.notify(NotificationTypeEnum.ERROR, 'Login failed.')
+                } else {
+                  this.handleHttpErrorResponse(error);
+                }
                 this.router.navigateByUrl("/login");
                 break;
               case 404:
