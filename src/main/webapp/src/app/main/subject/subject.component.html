@@ -1,14 +1,14 @@
 <main class="container">
   <h3>Chats</h3>
   <p>Select a chat room to join</p>
-  <section class="list-group">
+  <section class="list-group mb-3">
     <div class="w-100 list-group-item list-group-item-action"
          *ngFor="let subject of subjects">
       <a class="d-flex justify-content-between text-decoration-none"
          [href]="'chat/'+subject.id"
          (click)="navigateToChat(subject.id)">
         <span> {{subject.title}}</span>
-        <button class="btn btn-secondary" (click)="onDeleteSubject(subject.id)">
+        <button class="btn btn-secondary ml-2" (click)="onDeleteSubject(subject.id)">
           <fa-icon [icon]="faTrash"></fa-icon>
         </button>
       </a>
