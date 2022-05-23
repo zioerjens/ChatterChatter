@@ -6,7 +6,6 @@ import com.example.chatterchatter.repository.MessageRepository;
 import com.example.chatterchatter.repository.UserRepository;
 import com.example.chatterchatter.service.interfaces.UserServiceInterface;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +18,17 @@ import java.util.Optional;
 @Transactional
 public class UserService implements UserServiceInterface {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final MessageRepository messageRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    private MessageRepository messageRepository;
+    public UserService(UserRepository userRepository,
+                       BCryptPasswordEncoder passwordEncoder,
+                       MessageRepository messageRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.messageRepository = messageRepository;
+    }
 
     @Override
     public List<User> findAllUsersExceptDeleted() {
@@ -76,7 +78,7 @@ public class UserService implements UserServiceInterface {
                 () -> new IllegalStateException("Deleted User could not be found.")
         );
         var messagesFromUserToBeDeleted = messageRepository.findAllBySenderId(userId);
-        messagesFromUserToBeDeleted.stream().forEach(m -> m.setSender(deletedUser));
+        messagesFromUserToBeDeleted.forEach(m -> m.setSender(deletedUser));
         userRepository.deleteById(userId);
     }
 
