@@ -37,6 +37,9 @@ export class ErrorInterceptor implements HttpInterceptor {
               case 404:
                 this.router.navigateByUrl("/404");
                 break;
+              case 504:
+                //noop
+                break;
               default:
                 this.handleHttpErrorResponse(error);
                 break;

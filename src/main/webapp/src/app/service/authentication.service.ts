@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
-import {Observable, Subject} from "rxjs";
+import {Observable, ReplaySubject} from "rxjs";
 import {UserLogin} from "../model/UserLogin";
 import {User} from "../model/User";
 import {JwtHelperService} from "@auth0/angular-jwt";
@@ -15,7 +15,7 @@ export class AuthenticationService {
   private loggedInUsername: string | null;
   private jwtHelper = new JwtHelperService();
 
-  private $loggedIn = new Subject<boolean>();
+  private $loggedIn = new ReplaySubject<boolean>(1);
 
   constructor(private http: HttpClient) {
     this.token = null;

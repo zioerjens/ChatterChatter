@@ -23,14 +23,14 @@ public class UserResource {
     private UserService userService;
 
     @GetMapping
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> users = userService.findAllUsersExceptDeleted().stream().map(this::convertUserToDTO).toList();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) throws Exception {
         User user = userService.findUserById(userId).orElseThrow(
                 () -> new EntityNotFoundException("User could not be found")
