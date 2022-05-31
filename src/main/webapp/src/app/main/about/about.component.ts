@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {faChevronLeft} from "@fortawesome/free-solid-svg-icons";
+import {AuthenticationService} from "../../service/authentication.service";
 
 @Component({
   selector: 'app-about',
@@ -6,11 +8,14 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
+  faChevronLeft = faChevronLeft;
+  isBackButtonVisible: boolean = false;
 
-  constructor() {
+  constructor(private authenticationService:AuthenticationService) {
   }
 
   ngOnInit(): void {
+    this.isBackButtonVisible = !this.authenticationService.isTokenValid();
   }
 
 }

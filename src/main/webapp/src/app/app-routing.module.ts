@@ -15,7 +15,8 @@ import {AdminGuard} from "./guard/admin.guard";
 
 const routes: Routes = [
   {path: '404', component: PageNotFoundComponent},
-  {path: 'about', component: AboutComponent, canActivate: [AuthenticationGuard]},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: 'about', component: AboutComponent},
   {path: 'chat', component: SubjectComponent, canActivate: [AuthenticationGuard]},
   {path: 'chat/:id', component: ChatComponent, canActivate: [AuthenticationGuard]},
   {path: 'login', component: LoginComponent},

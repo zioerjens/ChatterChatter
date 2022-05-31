@@ -1,42 +1,65 @@
 <main class="m-3 rounded p-3">
-  <h1>About</h1>
-
-  <p>The Application ChatterChatter is a chat application which enables people from all over the world to
-    exchange with each other. You can meet anyone and communicate about anything. Just head over to the "Chat Rooms"
-    page after logging in and create a new room or join an existing one.</p>
+  <section>
+    <div class="row flex-nowrap">
+      <a *ngIf="isBackButtonVisible" [href]="'/login'" class="text-decoration-none ml-3 mt-2">
+        <fa-icon [icon]="faChevronLeft"></fa-icon>
+        Back
+      </a>
+      <h2 class="ml-3 mt-1">About</h2>
+    </div>
+    <p>The Application ChatterChatter is a chat application which enables people from all over the world to
+      exchange with each other. You can meet anyone and communicate about anything. Just head over to the "Chat Rooms"
+      page after logging in and create a new room or join an existing one.</p>
+  </section>
   <hr>
-  <h2>Entities and Relations</h2>
-  <p>There are three entities implemented: </p>
-  <ul>
-    <li>users (read, create, update, delete)</li>
-    <li>chat rooms / subjects (read, create, delete)</li>
-    <li>messages (read, create, delete)</li>
-  </ul>
-  <p>With two non-trivial relations: </p>
-  <ul>
-    <li>user to message (1:n)</li>
-    <li>message to subject (n:1)</li>
-  </ul>
+  <section>
+    <h3>Entities and Relations</h3>
+    <p>There are three entities implemented: </p>
+    <ul>
+      <li>users <i>(read, create, update, delete)</i></li>
+      <li>chat rooms / subjects <i>(read, create, delete)</i></li>
+      <li>messages <i>(read, create, delete)</i></li>
+    </ul>
+    <h5>With two non-trivial relations</h5>
+    <ul>
+      <li>user to message <i>(1:n)</i></li>
+      <li>message to subject <i>(n:1)</i></li>
+    </ul>
+  </section>
   <hr>
-  <h2>Validation</h2>
-  <p>All input fields are validated in the frontend and the backend too.</p>
+  <section class="row">
+    <article class="col col-lg-6 col-12">
+      <h3>Validation</h3>
+      <p>All input fields are validated in the frontend and the backend too.</p>
+    </article>
+    <article class="col col-lg-6 col-12">
+      <h3>Responsive</h3>
+      <p>ChatterChatter is a mobile friendly application and can be used on any device format.</p>
+    </article>
+    <article class="col col-lg-6 col-12">
+      <h3>Authentication</h3>
+      <p>The creators of this website have implemented a working JWT-authentication to ensure maximum safety to all
+        users. It has a role-based authorisation implemented so that only admins are allowed to edit users in the
+        user-management section.</p>
+    </article>
+    <article class="col col-lg-6 col-12">
+      <h3>Rich Client</h3>
+      <p>The website ChatterChatter consists of two separate applications which are running simultaneously. The angular
+        app
+        provides the HTML, CSS and JavaScript while the backend, a spring boot application, takes care of the user
+        management and persistence.</p>
+    </article>
+    <hr>
+  </section>
   <hr>
-  <h2>Authentication</h2>
-  <p>The creators of this website have implemented a working JWT-authentication to ensure maximum safety to all
-    users. It has a role-based authorisation implemented so that only admins are allowed to edit users in the
-    user-management section.</p>
-  <hr>
-  <h2>Rich Client</h2>
-  <p>The website ChatterChatter consists of two separate applications which are running simultaneously. The angular app
-    provides the HTML, CSS and JavaScript while the backend, a spring boot application, takes care of the user
-    management and persistence.</p>
-  <hr>
-  <h2>Responsive</h2>
-  <p>ChatterChatter is a mobile friendly application and can be used on any device format.</p>
-  <hr>
-  <h2>Team</h2>
-  <p>Our team consists of Jan Zimmermann and Sven Ziörjen. We are happy to provide this awesome website for you. Have
-    fun exploring ChatterChatter and see you soon, somewhere in one of our chat rooms!</p>
+  <section>
+    <h3>Team</h3>
+    <p>Our team consists of Jan Zimmermann and Sven Ziörjen. We are happy to provide this awesome website for you. Have
+      fun exploring ChatterChatter and see you soon, somewhere in one of our chat rooms!</p>
+  </section>
 </main>
-
-<p class="motivation">Everything is possible with ChatterChatter!</p>
+<footer>
+  <summary>
+    <p class="motivation">Everything is possible with ChatterChatter!</p>
+  </summary>
+</footer>
