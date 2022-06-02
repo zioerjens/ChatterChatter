@@ -81,7 +81,7 @@ public class AuthenticationResourceIT {
                 createURLWithPort("/api/auth/login"),
                 HttpMethod.POST, entity, UserDTO.class);
 
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
         assertNull(response.getBody().getUsername());
     }
@@ -89,10 +89,10 @@ public class AuthenticationResourceIT {
     @Test
     public void testRegister_withValidFormData_OK() {
         UserRegisterDTO registerDTO = new UserRegisterDTO();
-        registerDTO.setUsername("user");
-        registerDTO.setEmail("user@user.ch");
-        registerDTO.setFirstName("user");
-        registerDTO.setLastName("user");
+        registerDTO.setUsername("user1");
+        registerDTO.setEmail("user1@user1.ch");
+        registerDTO.setFirstName("user1");
+        registerDTO.setLastName("user1");
         registerDTO.setPassword("password");
 
         HttpEntity<UserRegisterDTO> entity = new HttpEntity<>(registerDTO, headers);
@@ -105,14 +105,14 @@ public class AuthenticationResourceIT {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals("user", response.getBody().getUsername());
+        assertEquals("user1", response.getBody().getUsername());
         assertTrue(user.isPresent());
         assertEquals(registerDTO.getUsername(), user.get().getUsername());
         assertEquals(RoleEnum.ROLE_USER, response.getBody().getRole());
     }
 
     @Test
-    public void testRegister_withAlreadyRegisteredUser_OK() {
+    public void testRegister_withAlreadyRegisteredUser_NOK() {
         UserRegisterDTO registerDTO = new UserRegisterDTO();
         registerDTO.setUsername("admin");
         registerDTO.setEmail("user@user.ch");
