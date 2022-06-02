@@ -53,7 +53,7 @@ public class LoginPageE2E {
 
         loginPage.waitUntilLoginProcessed(webDriver);
 
-        assertTrue(webDriver.getCurrentUrl().contains("/users/management"));
+        assertTrue(webDriver.getCurrentUrl().contains("/chat"));
         assertNotNull(loginPage.getTokenFromLocalStorage(webDriver));
     }
 

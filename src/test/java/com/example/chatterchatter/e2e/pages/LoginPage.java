@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class LoginPage {
     private static final String BASE_PATH = "/login";
-    private static final String SUCCESSFUL_LOGIN_URL = "/users/management";
+    private static final String SUCCESSFUL_LOGIN_URL = "/chat";
     private static final String TOKEN_SELECTOR = "token";
     private static final String PLACEHOLDER_SELECTOR = "placeholder";
     private static final String USERNAME_PLACEHOLDER = "Username";

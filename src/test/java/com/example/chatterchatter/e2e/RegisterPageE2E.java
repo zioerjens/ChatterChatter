@@ -52,7 +52,7 @@ public class RegisterPageE2E {
         WebElement passwordInput = registerPage.getPasswordInput().get();
         WebElement passwordRepeatInput = registerPage.getPasswordRepeatInput().get();
 
-        usernameInput.sendKeys("user");
+        usernameInput.sendKeys("maria");
         firstNameInput.sendKeys("Maria");
         lastNameInput.sendKeys("Bernasconi");
         emailInput.sendKeys("maria@berna.ch");
