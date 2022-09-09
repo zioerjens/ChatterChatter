@@ -1,8 +1,11 @@
-# Chatter-Chatter setup
+# Chatter-Chatter Readme
 
-This project was created in the module webeC in 2022. Authors: Sven Ziörjen and Jan Zimmermann
+This project was created for the computer science studies in 2022. Authors: Sven Ziörjen and Jan Zimmermann
+It's a simple chat-webapplication which fetches the required informations by sending requests to a spring backend.
 
-# Requirements
+# Install manual
+
+## Requirements
 
 1. Maven must be installed and be accessible through the terminal/cmd.
 
