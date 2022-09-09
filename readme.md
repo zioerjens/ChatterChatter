@@ -1,9 +1,9 @@
-# Chatter-Chatter Readme
+# Chatter-Chatter
 
 This project was created for the computer science studies in 2022. Authors: Sven Ziörjen and Jan Zimmermann
-It's a simple chat-webapplication which fetches the required informations by sending requests to a spring backend.
+It's a simple chat-webapplication which fetches the required informations by sending requests to a spring backend.    
 
-# Install manual
+# Installation manual
 
 ## Requirements
 
